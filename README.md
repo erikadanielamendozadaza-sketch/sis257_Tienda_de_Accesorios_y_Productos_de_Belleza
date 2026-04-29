@@ -126,6 +126,8 @@ cantidad
 
 precioUnitario
 
+descuento
+
 subtotal
 
 Relaciones:
