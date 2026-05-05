@@ -23,6 +23,16 @@ export class CreateProductoDto {
   readonly idUnidadMedida: number;
 
   @ApiProperty()
+  @IsDefined({ message: 'El id del proveedor es obligatorio' })
+  @IsInt({ message: 'El id del proveedor debe ser un número entero' })
+  readonly idProveedor: number;
+
+  @ApiProperty()
+  @IsDefined({ message: 'El id de la marca es obligatorio' })
+  @IsInt({ message: 'El id de la marca debe ser un número entero' })
+  readonly idMarca: number;
+
+  @ApiProperty()
   @IsNotEmpty({ message: 'El código es obligatorio' })
   @IsString({ message: 'El código debe ser una cadena de texto' })
   @MaxLength(10, { message: 'El código no puede tener mas de 10 caracteres' })

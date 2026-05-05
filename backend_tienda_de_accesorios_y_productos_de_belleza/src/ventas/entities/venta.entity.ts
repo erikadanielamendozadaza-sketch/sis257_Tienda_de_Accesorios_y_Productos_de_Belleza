@@ -1,4 +1,6 @@
 import { Cliente } from 'src/clientes/entities/cliente.entity';
+import { DetalleVenta } from 'src/detalle_ventas/entities/detalle_venta.entity';
+import { Empleado } from 'src/empleados/entities/empleado.entity';
 import {
   Column,
   CreateDateColumn,
@@ -6,6 +8,7 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -17,6 +20,9 @@ export class Venta {
 
   @Column('integer', { name: 'id_cliente' })
   idCliente: number;
+
+  @Column('integer', { name: 'id_empleado' })
+  idEmpleado: number;
 
   @Column('date')
   fecha: Date;
@@ -36,4 +42,11 @@ export class Venta {
   @ManyToOne(() => Cliente, (cliente) => cliente.ventas)
   @JoinColumn({ name: 'id_cliente' })
   cliente: Cliente;
+
+  @ManyToOne(() => Empleado, (empleado) => empleado.ventas)
+  @JoinColumn({ name: 'id_empleado' })
+  empleado: Empleado;
+
+ @OneToMany(() => DetalleVenta, (detalle) => detalle.venta)
+detalles: DetalleVenta[];
 }

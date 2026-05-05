@@ -15,6 +15,7 @@ export class VentasService {
     @InjectRepository(Venta)
     private readonly ventaRepository: Repository<Venta>,
   ) {}
+
   async create(createVentaDto: CreateVentaDto): Promise<Venta> {
     if (createVentaDto.total < 0) {
       throw new ConflictException('El total no puede ser negativo');
@@ -37,8 +38,29 @@ export class VentasService {
           razonSocial: true,
           cedulaIdentidad: true,
         },
+        empleado: {
+          id: true,
+          nombre: true,
+          primerApellido: true,
+          segundoApellido: true,
+          cedulaIdentidad: true,
+        },
+        detalles: {
+          id: true,
+          cantidad: true,
+          precioUnitario: true,
+          descuento: true,
+          subtotal: true,
+          producto: { id: true, nombre: true },
+        }, 
       },
-      relations: { cliente: true },
+      relations: {
+        cliente: true,
+        empleado: true,
+        detalles: {
+          producto: true,
+        }, 
+      },
       order: { fecha: 'DESC' },
     });
   }
@@ -46,7 +68,13 @@ export class VentasService {
   async findOne(id: number): Promise<Venta> {
     const venta = await this.ventaRepository.findOne({
       where: { id },
-      relations: { cliente: true },
+      relations: {
+        cliente: true,
+        empleado: true,
+        detalles: {
+          producto: true,
+        }, 
+      },
     });
 
     if (!venta) {

@@ -8,6 +8,10 @@ import { CategoriasModule } from './categorias/categorias.module';
 import { UnidadesMedidaModule } from './unidades_medida/unidades_medida.module';
 import { ClientesModule } from './clientes/clientes.module';
 import { VentasModule } from './ventas/ventas.module';
+import { ProveedoresModule } from './proveedores/proveedores.module';
+import { EmpleadosModule } from './empleados/empleados.module';
+import { DetalleVentasModule } from './detalle_ventas/detalle_ventas.module';
+import { MarcasModule } from './marcas/marcas.module';
 
 @Module({
   imports: [
@@ -28,6 +32,10 @@ import { VentasModule } from './ventas/ventas.module';
     UnidadesMedidaModule,
     ClientesModule,
     VentasModule,
+    ProveedoresModule,
+    EmpleadosModule,
+    DetalleVentasModule,
+    MarcasModule,
   ],
   controllers: [AppController],
   providers: [AppService],

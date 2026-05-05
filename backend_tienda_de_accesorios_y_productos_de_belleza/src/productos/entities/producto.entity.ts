@@ -1,4 +1,7 @@
 import { Categoria } from 'src/categorias/entities/categoria.entity';
+import { DetalleVenta } from 'src/detalle_ventas/entities/detalle_venta.entity';
+import { Marca } from 'src/marcas/entities/marca.entity';
+import { Proveedor } from 'src/proveedores/entities/proveedor.entity';
 import { UnidadMedida } from 'src/unidades_medida/entities/unidad_medida.entity';
 import {
   Column,
@@ -7,6 +10,7 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -21,6 +25,12 @@ export class Producto {
 
   @Column('integer', { name: 'id_unidad_medida' })
   idUnidadMedida: number;
+
+  @Column('integer', { name: 'id_proveedor' })
+  idProveedor: number;
+
+  @Column('integer', { name: 'id_marca' })
+  idMarca: number;
 
   @Column('varchar', { length: 10 })
   codigo: string;
@@ -56,4 +66,15 @@ export class Producto {
   @ManyToOne(() => UnidadMedida, (unidadMedida) => unidadMedida.productos)
   @JoinColumn({ name: 'id_unidad_medida' })
   unidadMedida: UnidadMedida;
+
+  @ManyToOne(() => Proveedor, (proveedor) => proveedor.productos)
+  @JoinColumn({ name: 'id_proveedor' })
+  proveedor: Proveedor;
+
+  @OneToMany(() => DetalleVenta, (detalle) => detalle.producto)
+  detalles: DetalleVenta[];
+
+  @ManyToOne(() => Marca, (marca) => marca.productos)
+  @JoinColumn({ name: 'id_marca' })
+  marca: Marca;
 }

@@ -49,8 +49,26 @@ export class ProductosService {
         cantidadMinimaStock: true,
         categoria: { id: true, nombre: true },
         unidadMedida: { id: true, descripcion: true },
+        proveedor: { id: true, nombreEmpresa: true },
+        marca: { id: true, nombre: true },
+        detalles: {
+          id: true,
+          cantidad: true,
+          precioUnitario: true,
+          descuento: true,
+          subtotal: true,
+          venta: { id: true, fecha: true },
+        },
       },
-      relations: { categoria: true, unidadMedida: true },
+      relations: {
+        categoria: true,
+        unidadMedida: true,
+        proveedor: true,
+        marca: true,
+        detalles: {
+          venta: true,
+        },
+      },
       order: { nombre: 'ASC' },
     });
   }
@@ -58,8 +76,17 @@ export class ProductosService {
   async findOne(id: number): Promise<Producto> {
     const producto = await this.productoRepository.findOne({
       where: { id },
-      relations: { categoria: true, unidadMedida: true },
+      relations: {
+        categoria: true,
+        unidadMedida: true,
+        proveedor: true,
+        marca: true,
+        detalles: {
+          venta: true, 
+        },
+      },
     });
+
     if (!producto) {
       throw new NotFoundException('El producto no existe');
     }
@@ -74,7 +101,8 @@ export class ProductosService {
 
     const stock = updateProductoDto.stock ?? producto.stock;
     const min =
-      updateProductoDto.cantidadMinimaStock ?? producto.cantidadMinimaStock;
+      updateProductoDto.cantidadMinimaStock ??
+      producto.cantidadMinimaStock;
 
     if (stock < min) {
       throw new ConflictException(

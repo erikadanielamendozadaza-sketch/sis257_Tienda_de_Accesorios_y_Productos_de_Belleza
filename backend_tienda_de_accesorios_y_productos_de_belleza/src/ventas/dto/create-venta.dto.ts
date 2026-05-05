@@ -9,6 +9,11 @@ export class CreateVentaDto {
   readonly idCliente: number;
 
   @ApiProperty()
+  @IsDefined({ message: 'El id del empleado es obligatorio' })
+  @IsInt({ message: 'El id del empleado debe ser un número entero' })
+  readonly idEmpleado: number;
+
+  @ApiProperty()
   @IsDefined({ message: 'La fecha es obligatoria' })
   @IsDateString({}, { message: 'La fecha debe ser una fecha válida' })
   readonly fecha: Date;
