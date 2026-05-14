@@ -6,6 +6,7 @@ import {
   IsInt,
   IsNotEmpty,
   IsNumber,
+  IsOptional,
   IsString,
   MaxLength,
   Min,
@@ -51,6 +52,14 @@ export class CreateProductoDto {
   readonly nombre: string;
 
   @ApiProperty()
+  @IsOptional()
+  @IsString({ message: 'La foto debe ser una cadena de texto' })
+  @Transform(({ value }): string | undefined =>
+    typeof value === 'string' ? value.trim() : value,
+  )
+  readonly foto?: string;
+
+  @ApiProperty()
   @Type(() => Number)
   @IsNumber({}, { message: 'El precio debe ser un número' })
   @Min(0, { message: 'El precio no puede ser negativo' })
@@ -63,7 +72,7 @@ export class CreateProductoDto {
   readonly stock: number;
 
   @ApiProperty()
-  @IsDefined({ message: 'La fecha de vencimiento es obligatoria' })
+  @IsOptional()
   @IsDateString({}, { message: 'La fecha de vencimiento debe ser una fecha válida' })
   readonly fechaVencimiento: Date;
 

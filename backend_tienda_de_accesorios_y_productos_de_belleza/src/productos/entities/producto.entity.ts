@@ -38,14 +38,17 @@ export class Producto {
   @Column('varchar', { length: 50 })
   nombre: string;
 
+  @Column('varchar', {length: 255, nullable: true})
+  foto?: string;
+
   @Column('decimal', { precision: 10, scale: 2 })
   precioUnitario: number;
 
   @Column('int')
   stock: number;
 
-  @Column('date')
-  fechaVencimiento: Date;
+  @Column({ type: 'date', nullable: true })
+  fechaVencimiento?: Date;
 
   @Column('int')
   cantidadMinimaStock: number;
