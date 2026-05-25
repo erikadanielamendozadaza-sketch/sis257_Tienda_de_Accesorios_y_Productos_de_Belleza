@@ -45,7 +45,7 @@ export class CreateProductoDto {
   @ApiProperty()
   @IsNotEmpty({ message: 'El nombre es obligatorio' })
   @IsString({ message: 'El nombre debe ser una cadena de texto' })
-  @MaxLength(50, { message: 'El nombre no puede tener mas de 50 caracteres' })
+  @MaxLength(100, { message: 'El nombre no puede tener mas de 100 caracteres' })
   @Transform(({ value }): string | undefined =>
     typeof value === 'string' ? value.trim() : value,
   )
@@ -53,11 +53,12 @@ export class CreateProductoDto {
 
   @ApiProperty()
   @IsOptional()
-  @IsString({ message: 'La foto debe ser una cadena de texto' })
+  @IsString({ message: 'La imagen debe ser una cadena de texto' })
+  @MaxLength(255, { message: 'La imagen no puede tener mas de 255 caracteres' })
   @Transform(({ value }): string | undefined =>
     typeof value === 'string' ? value.trim() : value,
   )
-  readonly foto?: string;
+  readonly imagen?: string;
 
   @ApiProperty()
   @Type(() => Number)

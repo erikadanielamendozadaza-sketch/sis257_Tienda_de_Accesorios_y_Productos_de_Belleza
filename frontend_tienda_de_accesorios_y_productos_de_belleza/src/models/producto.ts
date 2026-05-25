@@ -1,15 +1,23 @@
+import type { Categoria } from './categoria'
+import type { Marca } from './marca'
+import type { Proveedor } from './proveedor'
+import type { UnidadMedida } from './unidad_medida'
+
 export interface Producto {
-  id?: number
+  id: number
+  idCategoria: number
+  idMarca: number
+  idUnidadMedida: number
+  idProveedor: number
   codigo: string
   nombre: string
   precioUnitario: number
   stock: number
-  fechaVencimiento: Date
   cantidadMinimaStock: number
-
-  categoria?: { id: number; nombre: string }
-  marca?: { id: number; nombre: string }
-  unidadMedida?: { id: number; descripcion: string }
-  proveedor?: { id: number; nombreEmpresa: string }
+  fechaVencimiento: Date
   imagen?: string
+  categoria: Categoria
+  marca: Marca
+  unidadMedida: UnidadMedida
+  proveedor: Proveedor
 }

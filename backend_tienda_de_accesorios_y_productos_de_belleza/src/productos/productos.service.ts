@@ -43,7 +43,7 @@ export class ProductosService {
         id: true,
         codigo: true,
         nombre: true,
-        foto: true,
+        imagen: true,
         precioUnitario: true,
         stock: true,
         fechaVencimiento: true,

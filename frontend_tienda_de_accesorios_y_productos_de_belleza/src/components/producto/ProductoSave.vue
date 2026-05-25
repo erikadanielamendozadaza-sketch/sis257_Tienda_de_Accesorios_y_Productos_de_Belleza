@@ -1,24 +1,30 @@
 <script setup lang="ts">
+import type { Categoria } from '@/models/categoria'
+import type { Marca } from '@/models/marca'
 import type { Producto } from '@/models/producto'
+import type { Proveedor } from '@/models/proveedor'
+import type { UnidadMedida } from '@/models/unidad_medida'
 import http from '@/plugins/axios'
-import { Textarea } from 'primevue'
+import Textarea from 'primevue/textarea'
 import Button from 'primevue/button'
-import Calendar from 'primevue/calendar'
 import Dialog from 'primevue/dialog'
 import InputNumber from 'primevue/inputnumber'
 import InputText from 'primevue/inputtext'
+import Select from 'primevue/select'
 import { computed, ref, watch } from 'vue'
+import { DatePicker } from 'primevue'
 
 const ENDPOINT = 'productos'
+
 const props = defineProps({
   mostrar: Boolean,
   producto: {
-    // ← CAMBIAR 'producto' igual que props
     type: Object as () => Producto,
     default: () => ({}) as Producto,
   },
   modoEdicion: Boolean,
 })
+
 const emit = defineEmits(['guardar', 'close'])
 
 const dialogVisible = computed({
@@ -28,30 +34,50 @@ const dialogVisible = computed({
   },
 })
 
+const categorias = ref<Categoria[]>([])
+const marcas = ref<Marca[]>([])
+const unidadesMedida = ref<UnidadMedida[]>([])
+const proveedores = ref<Proveedor[]>([])
+
 const producto = ref<Producto>({ ...props.producto })
+
 watch(
-  () => props.producto, // ← Consistente con props.producto
+  () => props.producto,
   (newVal) => {
     producto.value = { ...newVal }
   },
 )
 
-async function handleSave() {
-  if (!producto.value.codigo?.trim()) return alert('Código obligatorio')
-  if (!producto.value.nombre?.trim()) return alert('Nombre obligatorio')
-  if (producto.value.precioUnitario <= 0) return alert('Precio debe ser mayor a 0')
-  if (producto.value.stock < 0) return alert('Stock no puede ser negativo')
-  if (producto.value.cantidadMinimaStock < 0) return alert('Stock mínimo no puede ser negativo')
+async function obtenerCategorias() {
+  categorias.value = await http.get('categorias').then((res) => res.data)
+}
 
+async function obtenerMarcas() {
+  marcas.value = await http.get('marcas').then((res) => res.data)
+}
+
+async function obtenerUnidadesMedida() {
+  unidadesMedida.value = await http.get('unidades-medida').then((res) => res.data)
+}
+
+async function obtenerProveedores() {
+  proveedores.value = await http.get('proveedores').then((res) => res.data)
+}
+
+async function handleSave() {
   try {
     const body = {
-      codigo: producto.value.codigo.trim(),
-      nombre: producto.value.nombre.trim(),
-      precioUnitario: Number(producto.value.precioUnitario), // ← ASEGURAR number
-      stock: Number(producto.value.stock),
-      cantidadMinimaStock: Number(producto.value.cantidadMinimaStock),
-      imagen: producto.value.imagen?.trim() || null,
-      fechaVencimiento: producto.value.fechaVencimiento || null,
+      idCategoria: producto.value.categoria.id,
+      idMarca: producto.value.marca.id,
+      idUnidadMedida: producto.value.unidadMedida.id,
+      idProveedor: producto.value.proveedor.id,
+      codigo: producto.value.codigo,
+      nombre: producto.value.nombre,
+      precioUnitario: producto.value.precioUnitario,
+      stock: producto.value.stock,
+      cantidadMinimaStock: producto.value.cantidadMinimaStock,
+      fechaVencimiento: producto.value.fechaVencimiento,
+      imagen: producto.value.imagen,
     }
 
     if (props.modoEdicion) {
@@ -67,57 +93,133 @@ async function handleSave() {
     alert(error?.response?.data?.message || 'Error al guardar')
   }
 }
+
+watch(
+  () => props.mostrar,
+  (nuevoValor) => {
+    if (nuevoValor) {
+      obtenerCategorias()
+      obtenerMarcas()
+      obtenerUnidadesMedida()
+      obtenerProveedores()
+
+      if (props.producto?.id) {
+        producto.value = { ...props.producto }
+      } else {
+        producto.value = {
+          categoria: { id: 0 },
+          marca: { id: 0 },
+          unidadMedida: { id: 0 },
+          proveedor: { id: 0 },
+        } as Producto
+      }
+    }
+  },
+)
 </script>
 
 <template>
   <div class="card flex justify-center">
-    <!-- ← AGREGAR flex justify-center -->
     <Dialog
       v-model:visible="dialogVisible"
-      :header="props.modoEdicion ? 'Editar Producto' : 'Crear Producto'"
+      :header="(props.modoEdicion ? 'Editar' : 'Crear') + ' Producto'"
       style="width: 25rem"
     >
+      <!-- CATEGORÍA -->
+      <div class="flex items-center gap-4 mb-4">
+        <label for="categoria" class="font-semibold w-3"> Categoría </label>
+        <Select
+          id="categoria"
+          v-model="producto.categoria.id"
+          :options="categorias"
+          optionLabel="nombre"
+          optionValue="id"
+          class="flex-auto"
+          autofocus
+        />
+      </div>
+
+      <!-- MARCA -->
+      <div class="flex items-center gap-4 mb-4">
+        <label for="marca" class="font-semibold w-3"> Marca </label>
+        <Select
+          id="marca"
+          v-model="producto.marca.id"
+          :options="marcas"
+          optionLabel="nombre"
+          optionValue="id"
+          class="flex-auto"
+        />
+      </div>
+
+      <!-- UNIDAD MEDIDA -->
+      <div class="flex items-center gap-4 mb-4">
+        <label for="unidadMedida" class="font-semibold w-3"> Unidad de Medida </label>
+        <Select
+          id="unidadMedida"
+          v-model="producto.unidadMedida.id"
+          :options="unidadesMedida"
+          optionLabel="descripcion"
+          optionValue="id"
+          class="flex-auto"
+        />
+      </div>
+
+      <!-- PROVEEDOR -->
+      <div class="flex items-center gap-4 mb-4">
+        <label for="proveedor" class="font-semibold w-3"> Proveedor </label>
+        <Select
+          id="proveedor"
+          v-model="producto.proveedor.id"
+          :options="proveedores"
+          optionLabel="nombreEmpresa"
+          optionValue="id"
+          class="flex-auto"
+        />
+      </div>
+
       <!-- CÓDIGO -->
       <div class="flex items-center gap-4 mb-4">
-        <label for="codigo" class="font-semibold w-3">Código</label>
+        <label for="codigo" class="font-semibold w-3"> Código </label>
         <InputText
           id="codigo"
           v-model="producto.codigo"
           class="flex-auto"
           autocomplete="off"
-          autofocus
+          maxlength="10"
         />
       </div>
 
       <!-- NOMBRE -->
       <div class="flex items-center gap-4 mb-4">
-        <label for="nombre" class="font-semibold w-3">Nombre</label>
-        <InputText id="nombre" v-model="producto.nombre" class="flex-auto" autocomplete="off" />
+        <label for="nombre" class="font-semibold w-3"> Nombre </label>
+        <InputText
+          id="nombre"
+          v-model="producto.nombre"
+          class="flex-auto"
+          autocomplete="off"
+          maxlength="100"
+        />
       </div>
 
       <!-- PRECIO -->
       <div class="flex items-center gap-4 mb-4">
-        <label for="precio" class="font-semibold w-3">Precio</label>
+        <label for="precio" class="font-semibold w-3"> Precio </label>
         <InputNumber
           id="precio"
           v-model="producto.precioUnitario"
           mode="decimal"
-          :min="0.01"
-          :max="9999.99"
-          :step="0.01"
-          showButtons
-          class="w-28 p-inputnumber-sm"
-          placeholder="0.00"
+          :min="0"
+          class="flex-auto"
         />
       </div>
 
       <!-- STOCK -->
       <div class="flex items-center gap-4 mb-4">
-        <label for="stock" class="font-semibold w-3">Stock</label>
+        <label for="stock" class="font-semibold w-3"> Stock </label>
         <InputNumber
           id="stock"
           v-model="producto.stock"
-          mode="decimal"
           :min="0"
           :max="9999"
           :step="1"
@@ -129,39 +231,43 @@ async function handleSave() {
 
       <!-- STOCK MÍNIMO -->
       <div class="flex items-center gap-4 mb-4">
-        <label for="stockMinimo" class="font-semibold w-3">Stock Mín.</label>
+        <label for="stockMinimo" class="font-semibold w-3"> Stock Min. </label>
         <InputNumber
           id="stockMinimo"
           v-model="producto.cantidadMinimaStock"
-          mode="decimal"
           :min="0"
-          :max="Math.floor(producto.stock * 0.5)"
+          :max="Math.floor((producto.stock || 0) * 0.5)"
           :step="1"
           showButtons
           class="w-24 p-inputnumber-sm"
         />
       </div>
 
-      <!-- FECHA VENCIMIENTO -->
+      <!-- FECHA -->
       <div class="flex items-center gap-4 mb-4">
-        <label for="fechaVencimiento" class="font-semibold w-3">Vencimiento</label>
-        <Calendar
-          id="fechaVencimiento"
+        <label for="fecha" class="font-semibold w-3"> Fecha </label>
+        <DatePicker
+          id="fecha"
           v-model="producto.fechaVencimiento"
           class="flex-auto"
           dateFormat="dd/mm/yy"
           :showIcon="true"
-          placeholder="Selecciona fecha"
         />
       </div>
 
       <!-- IMAGEN -->
       <div class="flex items-center gap-4 mb-4">
-        <label for="imagen" class="font-semibold w-3">Imagen</label>
-        <Textarea id="imagen" v-model="producto.imagen" class="flex-auto" autocomplete="off" />
+        <label for="imagen" class="font-semibold w-3"> Imagen </label>
+        <Textarea
+          id="imagen"
+          v-model="producto.imagen"
+          class="flex-auto"
+          rows="3"
+          maxlength="200"
+        />
       </div>
 
-      <!-- BOTONES IGUALES AL DOCENTE -->
+      <!-- BOTONES -->
       <div class="flex justify-end gap-2">
         <Button
           type="button"
@@ -170,6 +276,7 @@ async function handleSave() {
           severity="secondary"
           @click="dialogVisible = false"
         />
+
         <Button type="button" label="Guardar" icon="pi pi-save" @click="handleSave" />
       </div>
     </Dialog>

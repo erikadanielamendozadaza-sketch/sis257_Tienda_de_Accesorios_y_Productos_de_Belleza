@@ -35,11 +35,11 @@ export class Producto {
   @Column('varchar', { length: 10 })
   codigo: string;
 
-  @Column('varchar', { length: 50 })
+  @Column('varchar', { length: 100 })
   nombre: string;
 
   @Column('varchar', {length: 255, nullable: true})
-  foto?: string;
+  imagen?: string;
 
   @Column('decimal', { precision: 10, scale: 2 })
   precioUnitario: number;
