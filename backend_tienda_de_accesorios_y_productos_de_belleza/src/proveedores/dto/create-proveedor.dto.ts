@@ -14,7 +14,7 @@ export class CreateProveedorDto {
   )
   readonly nombreEmpresa: string;
 
-@ApiProperty()
+  @ApiProperty()
   @IsNotEmpty({ message: 'El teléfono es obligatorio' })
   @IsString({ message: 'El teléfono debe ser una cadena de texto' })
   @MaxLength(10, {
@@ -24,7 +24,6 @@ export class CreateProveedorDto {
     typeof value === 'string' ? value.trim() : value,
   )
   readonly telefono: string;
-
 
   @ApiProperty()
   @IsNotEmpty({ message: 'La dirección es obligatoria' })
@@ -37,7 +36,7 @@ export class CreateProveedorDto {
   )
   readonly direccion: string;
 
-    @ApiProperty()
+  @ApiProperty()
   @IsNotEmpty({ message: 'El email es obligatoria' })
   @IsString({ message: 'El email debe ser una cadena de texto' })
   @MaxLength(100, {

@@ -52,14 +52,14 @@ export class VentasService {
           descuento: true,
           subtotal: true,
           producto: { id: true, nombre: true },
-        }, 
+        },
       },
       relations: {
         cliente: true,
         empleado: true,
         detalles: {
           producto: true,
-        }, 
+        },
       },
       order: { fecha: 'DESC' },
     });
@@ -73,7 +73,7 @@ export class VentasService {
         empleado: true,
         detalles: {
           producto: true,
-        }, 
+        },
       },
     });
 

@@ -38,7 +38,7 @@ export class Producto {
   @Column('varchar', { length: 100 })
   nombre: string;
 
-  @Column('varchar', {length: 255, nullable: true})
+  @Column('varchar', { length: 255, nullable: true })
   imagen?: string;
 
   @Column('decimal', { precision: 10, scale: 2 })

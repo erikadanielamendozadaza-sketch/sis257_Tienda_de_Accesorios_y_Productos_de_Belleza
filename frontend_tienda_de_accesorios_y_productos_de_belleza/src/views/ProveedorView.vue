@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { Proveedor } from '@/models/proveedor'
 import ProveedorList from '@/components/proveedor/ProveedorList.vue'
 import ProveedorSave from '@/components/proveedor/ProveedorSave.vue'
 import Button from 'primevue/button'
@@ -6,14 +7,14 @@ import { ref } from 'vue'
 
 const mostrarDialog = ref(false)
 const proveedorListRef = ref<typeof ProveedorList | null>(null)
-const proveedorEdit = ref<any>(null)
+const proveedorEdit = ref<Proveedor | null>(null)
 
 function handleCreate() {
   proveedorEdit.value = null
   mostrarDialog.value = true
 }
 
-function handleEdit(proveedor: any) {
+function handleEdit(proveedor: Proveedor) {
   proveedorEdit.value = proveedor
   mostrarDialog.value = true
 }
@@ -29,12 +30,22 @@ function handleGuardar() {
 
 <template>
   <div>
-    <h2>proveedores</h2>
-    <Button label="Crear Nuevo" icon="pi pi-plus" @click="handleCreate" />
-    <ProveedorList ref="proveedorListRef" @edit="handleEdit" />
+    <h2>Proveedores</h2>
+
+    <Button
+      label="Crear Nuevo"
+      icon="pi pi-plus"
+      @click="handleCreate"
+    />
+
+    <ProveedorList
+      ref="proveedorListRef"
+      @edit="handleEdit"
+    />
+
     <ProveedorSave
       :mostrar="mostrarDialog"
-      :proveedor="proveedorEdit"
+      :proveedor="proveedorEdit || undefined"
       :modoEdicion="!!proveedorEdit"
       @guardar="handleGuardar"
       @close="handleCloseDialog"

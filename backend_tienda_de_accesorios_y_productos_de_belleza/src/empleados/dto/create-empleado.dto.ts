@@ -59,17 +59,6 @@ export class CreateEmpleadoDto {
   readonly usuario: string;
 
   @ApiProperty()
-  @IsNotEmpty({ message: 'La clave es obligatorio' })
-  @IsString({ message: 'La clave debe ser una cadena de texto' })
-  @MaxLength(100, {
-    message: 'La clave no puede tener más de 100 caracteres',
-  })
-  @Transform(({ value }): string | undefined =>
-    typeof value === 'string' ? value.trim() : value,
-  )
-  readonly clave: string;
-
-  @ApiProperty()
   @IsNotEmpty({ message: 'El teléfono es obligatorio' })
   @IsString({ message: 'El teléfono debe ser una cadena de texto' })
   @MaxLength(10, {

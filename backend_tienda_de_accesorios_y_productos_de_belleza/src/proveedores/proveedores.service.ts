@@ -32,22 +32,22 @@ export class ProveedoresService {
         telefono: true,
         direccion: true,
         email: true,
-        productos : {id: true, nombre: true,}
+        productos: { id: true, nombre: true },
       },
-      relations:{ productos: true},
+      relations: { productos: true },
       order: {
-        id:'ASC',
+        id: 'ASC',
       },
     });
   }
 
   async findOne(id: number): Promise<Proveedor> {
-    const proveedor = await this.proveedorRepository.findOne({ 
-      where : { id },
-    relations:{
-      productos:true
-    },
-   });
+    const proveedor = await this.proveedorRepository.findOne({
+      where: { id },
+      relations: {
+        productos: true,
+      },
+    });
     if (!proveedor) {
       throw new ConflictException('El proveedor no existe');
     }

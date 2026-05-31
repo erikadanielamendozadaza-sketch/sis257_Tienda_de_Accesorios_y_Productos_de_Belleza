@@ -43,14 +43,11 @@ export class DetalleVentasService {
     }
 
     const subtotal =
-      createDetalleVentaDto.cantidad *
-      createDetalleVentaDto.precioUnitario -
+      createDetalleVentaDto.cantidad * createDetalleVentaDto.precioUnitario -
       createDetalleVentaDto.descuento;
 
     if (subtotal < 0) {
-      throw new ConflictException(
-        'El subtotal no puede ser negativo',
-      );
+      throw new ConflictException('El subtotal no puede ser negativo');
     }
 
     detalleVenta = new DetalleVenta();
@@ -103,13 +100,10 @@ export class DetalleVentasService {
   ): Promise<DetalleVenta> {
     const detalleVenta = await this.findOne(id);
 
-    const cantidad =
-      updateDetalleVentaDto.cantidad ?? detalleVenta.cantidad;
+    const cantidad = updateDetalleVentaDto.cantidad ?? detalleVenta.cantidad;
     const precio =
-      updateDetalleVentaDto.precioUnitario ??
-      detalleVenta.precioUnitario;
-    const descuento =
-      updateDetalleVentaDto.descuento ?? detalleVenta.descuento;
+      updateDetalleVentaDto.precioUnitario ?? detalleVenta.precioUnitario;
+    const descuento = updateDetalleVentaDto.descuento ?? detalleVenta.descuento;
 
     if (cantidad <= 0) {
       throw new ConflictException('La cantidad debe ser mayor a 0');
@@ -126,9 +120,7 @@ export class DetalleVentasService {
     const subtotal = cantidad * precio - descuento;
 
     if (subtotal < 0) {
-      throw new ConflictException(
-        'El subtotal no puede ser negativo',
-      );
+      throw new ConflictException('El subtotal no puede ser negativo');
     }
 
     Object.assign(detalleVenta, updateDetalleVentaDto);

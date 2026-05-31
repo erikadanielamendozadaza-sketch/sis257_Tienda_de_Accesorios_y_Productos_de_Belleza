@@ -83,7 +83,7 @@ export class ProductosService {
         proveedor: true,
         marca: true,
         detalles: {
-          venta: true, 
+          venta: true,
         },
       },
     });
@@ -102,8 +102,7 @@ export class ProductosService {
 
     const stock = updateProductoDto.stock ?? producto.stock;
     const min =
-      updateProductoDto.cantidadMinimaStock ??
-      producto.cantidadMinimaStock;
+      updateProductoDto.cantidadMinimaStock ?? producto.cantidadMinimaStock;
 
     if (stock < min) {
       throw new ConflictException(

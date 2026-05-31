@@ -26,6 +26,6 @@ export class Marca {
   @DeleteDateColumn({ name: 'fecha_eliminacion' })
   fechaEliminacion: Date;
 
-    @OneToMany(() => Producto, (producto) => producto.marca)
+  @OneToMany(() => Producto, (producto) => producto.marca)
   productos: Producto[];
 }

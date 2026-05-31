@@ -60,10 +60,7 @@ export class MarcasService {
     return marca;
   }
 
-  async update(
-    id: number,
-    updateMarcaDto: UpdateMarcaDto,
-  ): Promise<Marca> {
+  async update(id: number, updateMarcaDto: UpdateMarcaDto): Promise<Marca> {
     const marca = await this.findOne(id);
 
     Object.assign(marca, updateMarcaDto);

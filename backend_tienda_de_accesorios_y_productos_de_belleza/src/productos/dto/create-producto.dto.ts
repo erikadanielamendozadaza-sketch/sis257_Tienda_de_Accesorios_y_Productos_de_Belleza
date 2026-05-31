@@ -74,7 +74,10 @@ export class CreateProductoDto {
 
   @ApiProperty()
   @IsOptional()
-  @IsDateString({}, { message: 'La fecha de vencimiento debe ser una fecha válida' })
+  @IsDateString(
+    {},
+    { message: 'La fecha de vencimiento debe ser una fecha válida' },
+  )
   readonly fechaVencimiento: Date;
 
   @ApiProperty()

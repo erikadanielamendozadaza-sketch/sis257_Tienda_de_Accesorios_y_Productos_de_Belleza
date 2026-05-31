@@ -72,49 +72,84 @@ async function handleSave() {
     alert(error?.response?.data?.message)
   }
 }
+
+watch(
+  () => props.mostrar,
+  (nuevoValor) => {
+    if (nuevoValor) {
+      if (props.proveedor?.id) {
+        proveedor.value = { ...props.proveedor }
+      } else {
+        proveedor.value = {
+          id: 0,
+          nombreEmpresa: '',
+          telefono: '',
+          direccion: '',
+          email: '',
+        }
+      }
+    }
+  },
+)
 </script>
 
 <template>
   <div class="card flex justify-center">
     <Dialog
       v-model:visible="dialogVisible"
-      :header="props.modoEdicion ? 'Editar Proveedor' : 'Crear Proveedor'"
-      style="width: 25rem"
+      :header="(props.modoEdicion ? 'Editar' : 'Crear') + ' Proveedor'"
+      style="width: 30rem"
     >
       <div class="flex items-center gap-4 mb-4">
-        <label for="nombreEmpresa" class="font-semibold w-3">Empresa</label>
+        <label for="nombreEmpresa" class="font-semibold w-4">
+          Empresa
+        </label>
+
         <InputText
           id="nombreEmpresa"
           v-model="proveedor.nombreEmpresa"
           class="flex-auto"
           autofocus
+          maxlength="100"
         />
       </div>
 
       <div class="flex items-center gap-4 mb-4">
-        <label for="telefono" class="font-semibold w-3">Teléfono</label>
+        <label for="telefono" class="font-semibold w-4">
+          Teléfono
+        </label>
+
         <InputText
           id="telefono"
           v-model="proveedor.telefono"
           class="flex-auto"
+          maxlength="10"
         />
       </div>
 
       <div class="flex items-center gap-4 mb-4">
-        <label for="direccion" class="font-semibold w-3">Dirección</label>
+        <label for="direccion" class="font-semibold w-4">
+          Dirección
+        </label>
+
         <InputText
           id="direccion"
           v-model="proveedor.direccion"
           class="flex-auto"
+          maxlength="200"
         />
       </div>
 
       <div class="flex items-center gap-4 mb-4">
-        <label for="email" class="font-semibold w-3">Email</label>
+        <label for="email" class="font-semibold w-4">
+          Email
+        </label>
+
         <InputText
           id="email"
           v-model="proveedor.email"
           class="flex-auto"
+          maxlength="100"
         />
       </div>
 
