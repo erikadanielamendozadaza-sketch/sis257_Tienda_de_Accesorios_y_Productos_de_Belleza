@@ -6,10 +6,11 @@ import { getTokenFromLocalStorage } from '@/helpers/index.ts'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
+    // router/index.ts o router.ts
     {
       path: '/',
-      name: 'home',
-      component: HomeView,
+      name: 'Home',
+      component: () => import('@/views/HomeView.vue'),
     },
     {
       path: '/about',
@@ -31,7 +32,7 @@ const router = createRouter({
       name: 'proveedores',
       component: () => import('../views/ProveedorView.vue'),
     },
-        {
+    {
       path: '/login',
       name: 'login',
       component: () => import('../views/LoginView.vue'),
@@ -40,7 +41,7 @@ const router = createRouter({
 })
 
 router.beforeEach(async (to) => {
-  const publicPages = ['/login']
+  const publicPages = ['/login', '/']
   const authRequired = !publicPages.includes(to.path)
   const authStore = useAuthStore()
 

@@ -97,80 +97,186 @@ watch(
   <div class="card flex justify-center">
     <Dialog
       v-model:visible="dialogVisible"
-      :header="(props.modoEdicion ? 'Editar' : 'Crear') + ' Proveedor'"
-      style="width: 30rem"
+      :header="(props.modoEdicion ? 'Editar' : 'Nuevo') + ' Proveedor'"
+      :modal="true"
+      :dismissableMask="true"
+      :closable="true"
+      class="dialog-rosa dialog-sin-scroll"
     >
-      <div class="flex items-center gap-4 mb-4">
-        <label for="nombreEmpresa" class="font-semibold w-4">
-          Empresa
-        </label>
+      <div class="form-container">
+        <!-- Empresa -->
+        <div class="form-group">
+          <label for="nombreEmpresa" class="form-label">Empresa</label>
+          <InputText
+            id="nombreEmpresa"
+            v-model="proveedor.nombreEmpresa"
+            class="input-rosa"
+            placeholder="Nombre de la empresa"
+            autofocus
+            maxlength="100"
+          />
+        </div>
 
-        <InputText
-          id="nombreEmpresa"
-          v-model="proveedor.nombreEmpresa"
-          class="flex-auto"
-          autofocus
-          maxlength="100"
-        />
-      </div>
+        <!-- Teléfono -->
+        <div class="form-group">
+          <label for="telefono" class="form-label">Teléfono</label>
+          <InputText
+            id="telefono"
+            v-model="proveedor.telefono"
+            class="input-rosa"
+            placeholder="0414-1234567"
+            maxlength="15"
+          />
+        </div>
 
-      <div class="flex items-center gap-4 mb-4">
-        <label for="telefono" class="font-semibold w-4">
-          Teléfono
-        </label>
+        <!-- Dirección -->
+        <div class="form-group">
+          <label for="direccion" class="form-label">Dirección</label>
+          <InputText
+            id="direccion"
+            v-model="proveedor.direccion"
+            class="input-rosa"
+            placeholder="Dirección completa"
+            maxlength="200"
+          />
+        </div>
 
-        <InputText
-          id="telefono"
-          v-model="proveedor.telefono"
-          class="flex-auto"
-          maxlength="10"
-        />
-      </div>
+        <!-- Email -->
+        <div class="form-group">
+          <label for="email" class="form-label">Email</label>
+          <InputText
+            id="email"
+            v-model="proveedor.email"
+            class="input-rosa"
+            placeholder="email@ejemplo.com"
+            maxlength="100"
+          />
+        </div>
 
-      <div class="flex items-center gap-4 mb-4">
-        <label for="direccion" class="font-semibold w-4">
-          Dirección
-        </label>
+        <!-- Botones -->
+        <div class="form-actions">
+          <Button
+            type="button"
+            label="Cancelar"
+            icon="pi pi-times"
+            severity="secondary"
+            class="btn-cancelar"
+            @click="dialogVisible = false"
+          />
 
-        <InputText
-          id="direccion"
-          v-model="proveedor.direccion"
-          class="flex-auto"
-          maxlength="200"
-        />
-      </div>
-
-      <div class="flex items-center gap-4 mb-4">
-        <label for="email" class="font-semibold w-4">
-          Email
-        </label>
-
-        <InputText
-          id="email"
-          v-model="proveedor.email"
-          class="flex-auto"
-          maxlength="100"
-        />
-      </div>
-
-      <div class="flex justify-end gap-2">
-        <Button
-          type="button"
-          label="Cancelar"
-          icon="pi pi-times"
-          severity="secondary"
-          @click="dialogVisible = false"
-        />
-
-        <Button
-          type="button"
-          label="Guardar"
-          icon="pi pi-save"
-          @click="handleSave"
-        />
+          <Button
+            type="button"
+            label="Guardar"
+            icon="pi pi-save"
+            class="btn-guardar"
+            @click="handleSave"
+          />
+        </div>
       </div>
     </Dialog>
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+/* Dialog sin scroll */
+:deep(.dialog-sin-scroll) {
+  max-height: 90vh !important;
+}
+
+:deep(.dialog-sin-scroll .p-dialog-content) {
+  max-height: 80vh !important;
+  overflow: visible !important;
+  padding: 0 !important;
+}
+
+:deep(.dialog-sin-scroll .p-dialog-body) {
+  max-height: 80vh !important;
+  overflow: visible !important;
+  padding: 1.5rem !important;
+}
+
+/* Container */
+.form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Form group */
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-label {
+  font-weight: 600;
+  color: #1f1f1f;
+  margin-bottom: 4px;
+  font-size: 12px;
+}
+
+/* Input rosa */
+.input-rosa {
+  width: 100%;
+  border: 2px solid #fce7f3;
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 14px;
+  background: #fffafc;
+  transition: all 0.3s ease;
+}
+
+.input-rosa:focus {
+  border-color: #ec4899;
+  box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.1);
+  outline: none;
+  background: #fff;
+}
+
+.input-rosa::placeholder {
+  color: #aaa;
+  font-size: 13px;
+}
+
+/* Acciones */
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px solid #fce7f3;
+}
+
+/* Botón cancelar */
+.btn-cancelar {
+  background: #f5f5f5 !important;
+  border-color: #e5e5e5 !important;
+  color: #333 !important;
+  padding: 10px 20px;
+  border-radius: 25px;
+  font-weight: 500;
+}
+
+.btn-cancelar:hover {
+  background: #e5e5e5 !important;
+}
+
+/* Botón guardar */
+.btn-guardar {
+  background: #ec4899 !important;
+  border-color: #ec4899 !important;
+  color: white !important;
+  padding: 10px 24px;
+  border-radius: 25px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-guardar:hover {
+  background: #db2777 !important;
+  border-color: #db2777 !important;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(236, 72, 153, 0.3);
+}
+</style>

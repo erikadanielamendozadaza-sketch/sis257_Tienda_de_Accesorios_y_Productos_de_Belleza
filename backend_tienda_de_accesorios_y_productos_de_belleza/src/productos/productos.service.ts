@@ -94,24 +94,11 @@ export class ProductosService {
     return producto;
   }
 
-  async update(
-    id: number,
-    updateProductoDto: UpdateProductoDto,
-  ): Promise<Producto> {
-    const producto = await this.findOne(id);
-
-    const stock = updateProductoDto.stock ?? producto.stock;
-    const min =
-      updateProductoDto.cantidadMinimaStock ?? producto.cantidadMinimaStock;
-
-    if (stock < min) {
-      throw new ConflictException(
-        'El stock no puede ser menor que la cantidad mínima de stock',
-      );
-    }
-
+  async update( id: number, updateProductoDto: UpdateProductoDto,): Promise<Producto> {
+    const producto = await this.productoRepository.findOneBy({ id });
+    if(!producto) throw new NotFoundException('El producto no existe');
+    
     Object.assign(producto, updateProductoDto);
-
     return this.productoRepository.save(producto);
   }
 

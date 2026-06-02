@@ -57,38 +57,73 @@
     <!-- Banner Section Begin -->
     <section class="banner spad">
       <div class="container">
-        <div class="row">
-          <div class="col-lg-7 offset-lg-4">
-            <div class="banner__item">
-              <div class="banner__item__pic">
-                <img src="@/assets/img/banner/banner-1.jpg" alt="" />
-              </div>
-              <div class="banner__item__text">
-                <h2>Clothing Collections 2030</h2>
-                <a href="#">Shop now</a>
-              </div>
+        <div class="banner-grid">
+          <!-- Banner 1 -->
+          <div class="banner-card">
+            <div class="banner-image">
+              <img src="@/assets/img/banner/ckone.jpeg" alt="Perfumes" />
+            </div>
+            <div class="banner-info">
+              <span class="banner-tag">✨ Bestseller</span>
+              <h3>Los perfumes más virales</h3>
+              <p>Las mejores fragancias del momento</p>
             </div>
           </div>
-          <div class="col-lg-5">
-            <div class="banner__item banner__item--middle">
-              <div class="banner__item__pic">
-                <img src="@/assets/img/banner/banner-2.jpg" alt="" />
-              </div>
-              <div class="banner__item__text">
-                <h2>Accessories</h2>
-                <a href="#">Shop now</a>
-              </div>
+          
+          <!-- Banner 2 -->
+          <div class="banner-card">
+            <div class="banner-image">
+              <img src="@/assets/img/banner/gafas.jpeg" alt="Gafas" />
+            </div>
+            <div class="banner-info">
+              <span class="banner-tag">Nueva Colección</span>
+              <h3>Las mejores gafas</h3>
+              <p>Moda y estilo para ti</p>
             </div>
           </div>
-          <div class="col-lg-7">
-            <div class="banner__item banner__item--last">
-              <div class="banner__item__pic">
-                <img src="@/assets/img/banner/banner-3.jpg" alt="" />
-              </div>
-              <div class="banner__item__text">
-                <h2>Shoes Spring 2030</h2>
-                <a href="#">Shop now</a>
-              </div>
+          
+          <!-- Banner 3 -->
+          <div class="banner-card">
+            <div class="banner-image">
+              <img src="@/assets/img/banner/melu.jpeg" alt="Productos" />
+            </div>
+            <div class="banner-info">
+              <span class="banner-tag">Gran Variedad</span>
+              <h3>Productos de belleza</h3>
+              <p>Todo lo que necesitas</p>
+            </div>
+          </div>
+
+          <div class="banner-card">
+            <div class="banner-image">
+              <img src="@/assets/img/banner/aretes.jpeg" alt="Productos" />
+            </div>
+            <div class="banner-info">
+              <span class="banner-tag">Gran Variedad</span>
+              <h3>Los aretes más bonitos</h3>
+              <p>Todo lo que necesitas</p>
+            </div>
+          </div>
+
+          <div class="banner-card">
+            <div class="banner-image">
+              <img src="@/assets/img/banner/collares.jpeg" alt="Productos" />
+            </div>
+            <div class="banner-info">
+              <span class="banner-tag">Gran Variedad</span>
+              <h3>Los mejores collares</h3>
+              <p>Todo lo que necesitas</p>
+            </div>
+          </div>
+
+          <div class="banner-card">
+            <div class="banner-image">
+              <img src="@/assets/img/banner/anillo.jpeg" alt="Productos" />
+            </div>
+            <div class="banner-info">
+              <span class="banner-tag">Gran Variedad</span>
+              <h3>Los anillos más buscados</h3>
+              <p>Todo lo que necesitas</p>
             </div>
           </div>
         </div>
@@ -96,531 +131,355 @@
     </section>
     <!-- Banner Section End -->
 
-    <!-- Product Section Begin -->
-    <section class="product spad">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-12">
-            <ul class="filter__controls">
-              <li class="active" data-filter="*">Best Sellers</li>
-              <li data-filter=".new-arrivals">New Arrivals</li>
-              <li data-filter=".hot-sales">Hot Sales</li>
-            </ul>
-          </div>
-        </div>
-        <div class="row product__filter">
-          <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix new-arrivals">
-            <div class="product__item">
-              <div
-                class="product__item__pic set-bg"
-                data-setbg="@/assets/img/product/product-1.jpg"
-              >
-                <span class="label">New</span>
-                <ul class="product__hover">
-                  <li>
-                    <a href="#"><img src="@/assets/img/icon/heart.png" alt="" /></a>
-                  </li>
-                  <li>
-                    <a href="#"
-                      ><img src="@/assets/img/icon/compare.png" alt="" /> <span>Compare</span></a
-                    >
-                  </li>
-                  <li>
-                    <a href="#"><img src="@/assets/img/icon/search.png" alt="" /></a>
-                  </li>
-                </ul>
-              </div>
-              <div class="product__item__text">
-                <h6>Piqué Biker Jacket</h6>
-                <a href="#" class="add-cart">+ Add To Cart</a>
-                <div class="rating">
-                  <i class="fa fa-star-o"></i>
-                  <i class="fa fa-star-o"></i>
-                  <i class="fa fa-star-o"></i>
-                  <i class="fa fa-star-o"></i>
-                  <i class="fa fa-star-o"></i>
-                </div>
-                <h5>$67.24</h5>
-                <div class="product__color__select">
-                  <label for="pc-1">
-                    <input type="radio" id="pc-1" />
-                  </label>
-                  <label class="active black" for="pc-2">
-                    <input type="radio" id="pc-2" />
-                  </label>
-                  <label class="grey" for="pc-3">
-                    <input type="radio" id="pc-3" />
-                  </label>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix hot-sales">
-            <div class="product__item">
-              <div
-                class="product__item__pic set-bg"
-                data-setbg="@/assets/img/product/product-2.jpg"
-              >
-                <ul class="product__hover">
-                  <li>
-                    <a href="#"><img src="@/assets/img/icon/heart.png" alt="" /></a>
-                  </li>
-                  <li>
-                    <a href="#"
-                      ><img src="@/assets/img/icon/compare.png" alt="" /> <span>Compare</span></a
-                    >
-                  </li>
-                  <li>
-                    <a href="#"><img src="@/assets/img/icon/search.png" alt="" /></a>
-                  </li>
-                </ul>
-              </div>
-              <div class="product__item__text">
-                <h6>Piqué Biker Jacket</h6>
-                <a href="#" class="add-cart">+ Add To Cart</a>
-                <div class="rating">
-                  <i class="fa fa-star-o"></i>
-                  <i class="fa fa-star-o"></i>
-                  <i class="fa fa-star-o"></i>
-                  <i class="fa fa-star-o"></i>
-                  <i class="fa fa-star-o"></i>
-                </div>
-                <h5>$67.24</h5>
-                <div class="product__color__select">
-                  <label for="pc-4">
-                    <input type="radio" id="pc-4" />
-                  </label>
-                  <label class="active black" for="pc-5">
-                    <input type="radio" id="pc-5" />
-                  </label>
-                  <label class="grey" for="pc-6">
-                    <input type="radio" id="pc-6" />
-                  </label>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix new-arrivals">
-            <div class="product__item sale">
-              <div
-                class="product__item__pic set-bg"
-                data-setbg="@/assets/img/product/product-3.jpg"
-              >
-                <span class="label">Sale</span>
-                <ul class="product__hover">
-                  <li>
-                    <a href="#"><img src="@/assets/img/icon/heart.png" alt="" /></a>
-                  </li>
-                  <li>
-                    <a href="#"
-                      ><img src="@/assets/img/icon/compare.png" alt="" /> <span>Compare</span></a
-                    >
-                  </li>
-                  <li>
-                    <a href="#"><img src="@/assets/img/icon/search.png" alt="" /></a>
-                  </li>
-                </ul>
-              </div>
-              <div class="product__item__text">
-                <h6>Multi-pocket Chest Bag</h6>
-                <a href="#" class="add-cart">+ Add To Cart</a>
-                <div class="rating">
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star-o"></i>
-                </div>
-                <h5>$43.48</h5>
-                <div class="product__color__select">
-                  <label for="pc-7">
-                    <input type="radio" id="pc-7" />
-                  </label>
-                  <label class="active black" for="pc-8">
-                    <input type="radio" id="pc-8" />
-                  </label>
-                  <label class="grey" for="pc-9">
-                    <input type="radio" id="pc-9" />
-                  </label>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix hot-sales">
-            <div class="product__item">
-              <div
-                class="product__item__pic set-bg"
-                data-setbg="@/assets/img/product/product-4.jpg"
-              >
-                <ul class="product__hover">
-                  <li>
-                    <a href="#"><img src="@/assets/img/icon/heart.png" alt="" /></a>
-                  </li>
-                  <li>
-                    <a href="#"
-                      ><img src="@/assets/img/icon/compare.png" alt="" /> <span>Compare</span></a
-                    >
-                  </li>
-                  <li>
-                    <a href="#"><img src="@/assets/img/icon/search.png" alt="" /></a>
-                  </li>
-                </ul>
-              </div>
-              <div class="product__item__text">
-                <h6>Diagonal Textured Cap</h6>
-                <a href="#" class="add-cart">+ Add To Cart</a>
-                <div class="rating">
-                  <i class="fa fa-star-o"></i>
-                  <i class="fa fa-star-o"></i>
-                  <i class="fa fa-star-o"></i>
-                  <i class="fa fa-star-o"></i>
-                  <i class="fa fa-star-o"></i>
-                </div>
-                <h5>$60.9</h5>
-                <div class="product__color__select">
-                  <label for="pc-10">
-                    <input type="radio" id="pc-10" />
-                  </label>
-                  <label class="active black" for="pc-11">
-                    <input type="radio" id="pc-11" />
-                  </label>
-                  <label class="grey" for="pc-12">
-                    <input type="radio" id="pc-12" />
-                  </label>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix new-arrivals">
-            <div class="product__item">
-              <div
-                class="product__item__pic set-bg"
-                data-setbg="@/assets/img/product/product-5.jpg"
-              >
-                <ul class="product__hover">
-                  <li>
-                    <a href="#"><img src="@/assets/img/icon/heart.png" alt="" /></a>
-                  </li>
-                  <li>
-                    <a href="#"
-                      ><img src="@/assets/img/icon/compare.png" alt="" /> <span>Compare</span></a
-                    >
-                  </li>
-                  <li>
-                    <a href="#"><img src="@/assets/img/icon/search.png" alt="" /></a>
-                  </li>
-                </ul>
-              </div>
-              <div class="product__item__text">
-                <h6>Lether Backpack</h6>
-                <a href="#" class="add-cart">+ Add To Cart</a>
-                <div class="rating">
-                  <i class="fa fa-star-o"></i>
-                  <i class="fa fa-star-o"></i>
-                  <i class="fa fa-star-o"></i>
-                  <i class="fa fa-star-o"></i>
-                  <i class="fa fa-star-o"></i>
-                </div>
-                <h5>$31.37</h5>
-                <div class="product__color__select">
-                  <label for="pc-13">
-                    <input type="radio" id="pc-13" />
-                  </label>
-                  <label class="active black" for="pc-14">
-                    <input type="radio" id="pc-14" />
-                  </label>
-                  <label class="grey" for="pc-15">
-                    <input type="radio" id="pc-15" />
-                  </label>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix hot-sales">
-            <div class="product__item sale">
-              <div
-                class="product__item__pic set-bg"
-                data-setbg="@/assets/img/product/product-6.jpg"
-              >
-                <span class="label">Sale</span>
-                <ul class="product__hover">
-                  <li>
-                    <a href="#"><img src="@/assets/img/icon/heart.png" alt="" /></a>
-                  </li>
-                  <li>
-                    <a href="#"
-                      ><img src="@/assets/img/icon/compare.png" alt="" /> <span>Compare</span></a
-                    >
-                  </li>
-                  <li>
-                    <a href="#"><img src="@/assets/img/icon/search.png" alt="" /></a>
-                  </li>
-                </ul>
-              </div>
-              <div class="product__item__text">
-                <h6>Ankle Boots</h6>
-                <a href="#" class="add-cart">+ Add To Cart</a>
-                <div class="rating">
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star-o"></i>
-                </div>
-                <h5>$98.49</h5>
-                <div class="product__color__select">
-                  <label for="pc-16">
-                    <input type="radio" id="pc-16" />
-                  </label>
-                  <label class="active black" for="pc-17">
-                    <input type="radio" id="pc-17" />
-                  </label>
-                  <label class="grey" for="pc-18">
-                    <input type="radio" id="pc-18" />
-                  </label>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix new-arrivals">
-            <div class="product__item">
-              <div
-                class="product__item__pic set-bg"
-                data-setbg="@/assets/img/product/product-7.jpg"
-              >
-                <ul class="product__hover">
-                  <li>
-                    <a href="#"><img src="@/assets/img/icon/heart.png" alt="" /></a>
-                  </li>
-                  <li>
-                    <a href="#"
-                      ><img src="@/assets/img/icon/compare.png" alt="" /> <span>Compare</span></a
-                    >
-                  </li>
-                  <li>
-                    <a href="#"><img src="@/assets/img/icon/search.png" alt="" /></a>
-                  </li>
-                </ul>
-              </div>
-              <div class="product__item__text">
-                <h6>T-shirt Contrast Pocket</h6>
-                <a href="#" class="add-cart">+ Add To Cart</a>
-                <div class="rating">
-                  <i class="fa fa-star-o"></i>
-                  <i class="fa fa-star-o"></i>
-                  <i class="fa fa-star-o"></i>
-                  <i class="fa fa-star-o"></i>
-                  <i class="fa fa-star-o"></i>
-                </div>
-                <h5>$49.66</h5>
-                <div class="product__color__select">
-                  <label for="pc-19">
-                    <input type="radio" id="pc-19" />
-                  </label>
-                  <label class="active black" for="pc-20">
-                    <input type="radio" id="pc-20" />
-                  </label>
-                  <label class="grey" for="pc-21">
-                    <input type="radio" id="pc-21" />
-                  </label>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix hot-sales">
-            <div class="product__item">
-              <div
-                class="product__item__pic set-bg"
-                data-setbg="@/assets/img/product/product-8.jpg"
-              >
-                <ul class="product__hover">
-                  <li>
-                    <a href="#"><img src="@/assets/img/icon/heart.png" alt="" /></a>
-                  </li>
-                  <li>
-                    <a href="#"
-                      ><img src="@/assets/img/icon/compare.png" alt="" /> <span>Compare</span></a
-                    >
-                  </li>
-                  <li>
-                    <a href="#"><img src="@/assets/img/icon/search.png" alt="" /></a>
-                  </li>
-                </ul>
-              </div>
-              <div class="product__item__text">
-                <h6>Basic Flowing Scarf</h6>
-                <a href="#" class="add-cart">+ Add To Cart</a>
-                <div class="rating">
-                  <i class="fa fa-star-o"></i>
-                  <i class="fa fa-star-o"></i>
-                  <i class="fa fa-star-o"></i>
-                  <i class="fa fa-star-o"></i>
-                  <i class="fa fa-star-o"></i>
-                </div>
-                <h5>$26.28</h5>
-                <div class="product__color__select">
-                  <label for="pc-22">
-                    <input type="radio" id="pc-22" />
-                  </label>
-                  <label class="active black" for="pc-23">
-                    <input type="radio" id="pc-23" />
-                  </label>
-                  <label class="grey" for="pc-24">
-                    <input type="radio" id="pc-24" />
-                  </label>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <!-- Product Section End -->
-
-    <!-- Categories Section Begin -->
-    <section class="categories spad">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-3">
-            <div class="categories__text">
-              <h2>
-                Clothings Hot <br />
-                <span>Shoe Collection</span> <br />
-                Accessories
-              </h2>
-            </div>
-          </div>
-          <div class="col-lg-4">
-            <div class="categories__hot__deal">
-              <img src="@/assets/img/product-sale.png" alt="" />
-              <div class="hot__deal__sticker">
-                <span>Sale Of</span>
-                <h5>$29.99</h5>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-4 offset-lg-1">
-            <div class="categories__deal__countdown">
-              <span>Deal Of The Week</span>
-              <h2>Multi-pocket Chest Bag Black</h2>
-              <div class="categories__deal__countdown__timer" id="countdown">
-                <div class="cd-item">
-                  <span>3</span>
-                  <p>Days</p>
-                </div>
-                <div class="cd-item">
-                  <span>1</span>
-                  <p>Hours</p>
-                </div>
-                <div class="cd-item">
-                  <span>50</span>
-                  <p>Minutes</p>
-                </div>
-                <div class="cd-item">
-                  <span>18</span>
-                  <p>Seconds</p>
-                </div>
-              </div>
-              <a href="#" class="primary-btn">Shop now</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <!-- Categories Section End -->
-
-    <!-- Instagram Section Begin -->
-    <section class="instagram spad">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-8">
-            <div class="instagram__pic">
-              <div
-                class="instagram__pic__item set-bg"
-                data-setbg="@/assets/img/instagram/instagram-1.jpg"
-              ></div>
-              <div
-                class="instagram__pic__item set-bg"
-                data-setbg="@/assets/img/instagram/instagram-2.jpg"
-              ></div>
-              <div
-                class="instagram__pic__item set-bg"
-                data-setbg="@/assets/img/instagram/instagram-3.jpg"
-              ></div>
-              <div
-                class="instagram__pic__item set-bg"
-                data-setbg="@/assets/img/instagram/instagram-4.jpg"
-              ></div>
-              <div
-                class="instagram__pic__item set-bg"
-                data-setbg="@/assets/img/instagram/instagram-5.jpg"
-              ></div>
-              <div
-                class="instagram__pic__item set-bg"
-                data-setbg="@/assets/img/instagram/instagram-6.jpg"
-              ></div>
-            </div>
-          </div>
-          <div class="col-lg-4">
-            <div class="instagram__text">
-              <h2>Instagram</h2>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                incididunt ut labore et dolore magna aliqua.
-              </p>
-              <h3>#Male_Fashion</h3>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <!-- Instagram Section End -->
-
-    <!-- Latest Blog Section Begin -->
-    <section class="latest spad">
+        <!-- Social Section Begin -->
+    <section class="social-section spad">
       <div class="container">
         <div class="row">
           <div class="col-lg-12">
             <div class="section-title">
-              <span>Latest News</span>
-              <h2>Fashion New Trends</h2>
+              <h2>✨ Síguenos en redes ✨</h2>
+              <p>Conoce las últimas tendencias y ofertas exclusivas</p>
             </div>
           </div>
         </div>
+        
         <div class="row">
-          <div class="col-lg-4 col-md-6 col-sm-6">
-            <div class="blog__item">
-              <div class="blog__item__pic set-bg" data-setbg="@/assets/img/blog/blog-1.jpg"></div>
-              <div class="blog__item__text">
-                <span><img src="@/assets/img/icon/calendar.png" alt="" /> 16 February 2020</span>
-                <h5>What Curling Irons Are The Best Ones</h5>
-                <a href="#">Read More</a>
+          <!-- Instagram -->
+          <div class="col-lg-4 col-md-4">
+            <div class="social-card instagram-card">
+              <div class="social-icon">
+                <i class="pi pi-instagram"></i>
               </div>
+              <h4>Instagram</h4>
+              <p>@ze_da.store</p>
+              <a href="https://www.instagram.com/ze_da.store/?hl=es" target="_blank" class="social-btn">Seguir</a>
             </div>
           </div>
-          <div class="col-lg-4 col-md-6 col-sm-6">
-            <div class="blog__item">
-              <div class="blog__item__pic set-bg" data-setbg="@/assets/img/blog/blog-2.jpg"></div>
-              <div class="blog__item__text">
-                <span><img src="@/assets/img/icon/calendar.png" alt="" /> 21 February 2020</span>
-                <h5>Eternity Bands Do Last Forever</h5>
-                <a href="#">Read More</a>
+          
+          <!-- TikTok -->
+          <div class="col-lg-4 col-md-4">
+            <div class="social-card tiktok-card">
+              <div class="social-icon">
+                <i class="pi pi-video"></i>
               </div>
+              <h4>TikTok</h4>
+              <p>@ze_da_store</p>
+              <a href="https://www.tiktok.com/@ze_da_store" target="_blank" class="social-btn">Seguir</a>
             </div>
           </div>
-          <div class="col-lg-4 col-md-6 col-sm-6">
-            <div class="blog__item">
-              <div class="blog__item__pic set-bg" data-setbg="@/assets/img/blog/blog-3.jpg"></div>
-              <div class="blog__item__text">
-                <span><img src="@/assets/img/icon/calendar.png" alt="" /> 28 February 2020</span>
-                <h5>The Health Benefits Of Sunglasses</h5>
-                <a href="#">Read More</a>
+          
+          <!-- Facebook -->
+          <div class="col-lg-4 col-md-4">
+            <div class="social-card facebook-card">
+              <div class="social-icon">
+                <i class="pi pi-facebook"></i>
               </div>
+              <h4>Facebook</h4>
+              <p>Ze.Da Store</p>
+              <a href="https://www.facebook.com/profile.php?id=61582403806523" target="_blank"class="social-btn">Seguir</a>
             </div>
           </div>
         </div>
       </div>
     </section>
-    <!-- Latest Blog Section End -->
+    <!-- Social Section End -->
+
   </div>
 </template>
+
+<style scoped>
+/* ========================================
+   BANNER
+======================================== */
+
+/* Banner */
+.banner {
+  padding: 60px 0;
+  background: #fffafc;
+}
+
+/* Grid */
+.banner-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
+}
+
+/* Card */
+.banner-card {
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(236, 72, 153, 0.1);
+  transition: all 0.3s ease;
+}
+
+.banner-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 30px rgba(236, 72, 153, 0.2);
+}
+
+/* Imagen */
+.banner-image {
+  width: 100%;
+  height: 220px;
+  overflow: hidden;
+}
+
+.banner-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.banner-card:hover .banner-image img {
+  transform: scale(1.08);
+}
+
+/* Info debajo */
+.banner-info {
+  padding: 20px;
+  text-align: center;
+}
+
+/* Tag */
+.banner-tag {
+  display: inline-block;
+  background: #fce7f3;
+  color: #ec4899;
+  padding: 5px 12px;
+  border-radius: 15px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Título */
+.banner-info h3 {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1f1f1f;
+  margin: 12px 0 5px 0;
+}
+
+/* Descripción */
+.banner-info p {
+  font-size: 13px;
+  color: #666;
+  margin: 0 0 15px 0;
+}
+
+/* Botón */
+.banner-btn {
+  display: inline-block;
+  background: #ec4899;
+  color: white;
+  padding: 10px 24px;
+  border-radius: 25px;
+  font-size: 13px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.banner-btn:hover {
+  background: #db2777;
+  transform: translateY(-2px);
+}
+
+/* ========================================
+   REDES SOCIALES
+======================================== */
+
+/* Social Section */
+.social-section {
+  padding: 60px 0;
+  background: linear-gradient(to bottom, #fffafc, #fce7f3);
+}
+
+/* Título */
+.section-title {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.section-title h2 {
+  font-size: 32px;
+  font-weight: 700;
+  color: #1f1f1f;
+  margin-bottom: 10px;
+}
+
+.section-title p {
+  font-size: 16px;
+  color: #666;
+}
+
+/* Social Card */
+.social-card {
+  background: white;
+  border-radius: 16px;
+  padding: 30px 20px;
+  text-align: center;
+  margin-bottom: 25px;
+  transition: all 0.3s ease;
+}
+
+.social-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+/* Icono */
+.social-icon {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 15px;
+  font-size: 30px;
+}
+
+/* Instagram */
+.instagram-card {
+  border: 2px solid #fce7f3;
+}
+
+.instagram-card .social-icon {
+  background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+  color: white;
+}
+
+.instagram-card:hover {
+  border-color: #bc1888;
+}
+
+/* TikTok */
+.tiktok-card {
+  border: 2px solid #f0f0f0;
+}
+
+.tiktok-card .social-icon {
+  background: #000000;
+  color: white;
+}
+
+.tiktok-card:hover {
+  border-color: #000000;
+}
+
+/* Facebook */
+.facebook-card {
+  border: 2px solid #f0f0f0;
+}
+
+.facebook-card .social-icon {
+  background: #1877f2;
+  color: white;
+}
+
+.facebook-card:hover {
+  border-color: #1877f2;
+}
+
+/* Título red */
+.social-card h4 {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1f1f1f;
+  margin-bottom: 5px;
+}
+
+/* Usuario */
+.social-card p {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+/* Seguidores */
+.social-followers {
+  display: inline-block;
+  font-size: 13px;
+  color: #ec4899;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+/* Botón */
+.social-btn {
+  display: inline-block;
+  padding: 10px 25px;
+  border-radius: 25px;
+  font-size: 13px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.instagram-card .social-btn {
+  background: #bc1888;
+  color: white;
+}
+
+.tiktok-card .social-btn {
+  background: #000;
+  color: white;
+}
+
+.facebook-card .social-btn {
+  background: #1877f2;
+  color: white;
+}
+
+.social-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+/* Galería */
+.social-gallery {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.social-gallery img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.social-gallery img:hover {
+  transform: scale(1.1);
+}
+
+/* Responsive */
+@media (max-width: 991px) {
+  .banner-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .social-gallery img {
+    width: 70px;
+    height: 70px;
+  }
+}
+
+@media (max-width: 576px) {
+  .banner-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .banner-image {
+    height: 180px;
+  }
+}
+</style>

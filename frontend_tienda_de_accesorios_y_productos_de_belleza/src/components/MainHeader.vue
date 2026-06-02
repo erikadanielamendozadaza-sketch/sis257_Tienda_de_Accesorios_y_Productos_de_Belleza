@@ -1,8 +1,14 @@
 <script setup lang="ts">
 import { useAuthStore } from '@/stores/index.ts'
-import { RouterLink } from 'vue-router'
+import { RouterLink, useRouter } from 'vue-router'
 
 const authStore = useAuthStore()
+const router = useRouter()
+
+function logout() {
+  authStore.logout()
+  router.push('/login')
+}
 </script>
 
 <template>
@@ -11,118 +17,149 @@ const authStore = useAuthStore()
     <div class="offcanvas-menu-wrapper">
       <div class="offcanvas__option">
         <div class="offcanvas__links">
-          <a href="#">Sign in</a>
-          <a href="#">FAQs</a>
+          <RouterLink to="/login" v-if="!authStore.token">Iniciar Sesión</RouterLink>
         </div>
-        <div class="offcanvas__top__hover">
-          <span>Usd <i class="arrow_carrot-down"></i></span>
-          <ul>
-            <li>USD</li>
-            <li>EUR</li>
-            <li>USD</li>
-          </ul>
-        </div>
-      </div>
-      <div class="offcanvas__nav__option">
-        <a href="#" class="search-switch"><img src="@/assets/img/icon/search.png" alt="" /></a>
-        <a href="#"><img src="@/assets/img/icon/heart.png" alt="" /></a>
-        <a href="#"><img src="@/assets/img/icon/cart.png" alt="" /> <span>0</span></a>
-        <div class="price">$0.00</div>
       </div>
       <div id="mobile-menu-wrap"></div>
       <div class="offcanvas__text">
-        <p>Free shipping, 30-day return or refund guarantee.</p>
+        <p>✨ Tu tienda de belleza favorita ✨</p>
       </div>
     </div>
+    
     <header class="header">
       <div class="header__top">
         <div class="container">
           <div class="row">
             <div class="col-lg-6 col-md-7">
               <div class="header__top__left">
-                <p>Free shipping, 30-day return or refund guarantee.</p>
+                <p>✨ Moda y estilo al alcance ✨</p>
               </div>
             </div>
             <div class="col-lg-6 col-md-5">
               <div class="header__top__right">
                 <div class="header__top__links">
-                  <a href="#">Sign in</a>
-                  <a href="#">FAQs</a>
-                </div>
-                <div class="header__top__hover">
-                  <span>Usd <i class="arrow_carrot-down"></i></span>
-                  <ul>
-                    <li>USD</li>
-                    <li>EUR</li>
-                    <li>USD</li>
-                  </ul>
+                  <RouterLink to="/login" v-if="!authStore.token" class="login-link">
+                    <i class="pi pi-sign-in"></i> Iniciar Sesión
+                  </RouterLink>
+                  <a v-else @click="logout()" class="logout-link">
+                    <i class="pi pi-sign-out"></i> Salir
+                  </a>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+      
       <div class="container">
         <div class="row">
           <div class="col-lg-3 col-md-3">
             <div class="header__logo">
-              <a href="./index.html"><img src="@/assets/img/logo.png" alt="" /></a>
+              <RouterLink to="/">
+                <img src="@/assets/img/ze_logo_largo.jpeg" alt="Ze & Da" class="logo-img" />
+              </RouterLink>
             </div>
           </div>
+          
           <div class="col-lg-6 col-md-6">
             <nav class="header__menu mobile-menu">
               <ul>
-                <li class="active">
-                  <RouterLink to="/">Inicio</RouterLink>
-                </li>
-
+                <!-- Inicio - SIEMPRE visible -->
                 <li>
-                  <RouterLink to="/productos">Productos</RouterLink>
+                  <RouterLink to="/" class="nav-link">Inicio</RouterLink>
                 </li>
-
-                <li>
-                  <RouterLink to="/clientes">Clientes</RouterLink>
+                
+                <!-- SOLO si está logueado -->
+                <li v-if="authStore.token">
+                  <RouterLink to="/productos" class="nav-link">Productos</RouterLink>
                 </li>
-
-                <li>
-                  <RouterLink to="/proveedores">Proveedores</RouterLink>
+                <li v-if="authStore.token">
+                  <RouterLink to="/clientes" class="nav-link">Clientes</RouterLink>
                 </li>
-
-                <li>
-                  <RouterLink to="/about">Acerca de</RouterLink>
+                <li v-if="authStore.token">
+                  <RouterLink to="/proveedores" class="nav-link">Proveedores</RouterLink>
                 </li>
-
+                
+                <!-- Si no está logueado -->
                 <li v-if="!authStore.token">
-                  <RouterLink to="/login">Iniciar Sesión</RouterLink>
+                  <RouterLink to="/login" class="nav-link">Iniciar Sesión</RouterLink>
                 </li>
               </ul>
             </nav>
           </div>
-          <div class="col-lg-3 col-md-3">
-            <div class="header__nav__option">
-              <a href="#" class="search-switch"
-                ><img src="@/assets/img/icon/search.png" alt=""
-              /></a>
-              <a href="#"><img src="@/assets/img/icon/heart.png" alt="" /></a>
-              <a href="#"><img src="@/assets/img/icon/cart.png" alt="" /> <span>0</span></a>
-              <div class="price">$0.00</div>
-            </div>
-          </div>
+          
         </div>
         <div class="canvas__open"><i class="fa fa-bars"></i></div>
       </div>
     </header>
-    <!-- Search Begin -->
-    <div class="search-model">
-      <div class="h-100 d-flex align-items-center justify-content-center">
-        <div class="search-close-switch">+</div>
-        <form class="search-model-form">
-          <input type="text" id="search-input" placeholder="Search here....." />
-        </form>
-      </div>
-    </div>
-    <!-- Search End -->
+    
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+/* Logo */
+.logo-img {
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Nav link base */
+.nav-link {
+  position: relative;
+  color: #1f1f1f;
+  font-weight: 500;
+  padding: 10px 15px;
+  transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+  color: #ec4899;
+}
+
+/* Link activo - ROSA */
+.nav-link.router-link-active {
+  color: #ec4899;
+  font-weight: 600;
+}
+
+/* Barra ROSA debajo del activo */
+.nav-link.router-link-active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 3px;
+  background: #ec4899;
+  border-radius: 2px;
+}
+
+/* Login link */
+.login-link {
+  color: #ec4899 !important;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.login-link:hover {
+  color: #db2777 !important;
+}
+
+/* Logout link */
+.logout-link {
+  color: #666 !important;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.logout-link:hover {
+  color: #ec4899 !important;
+}
+</style>
