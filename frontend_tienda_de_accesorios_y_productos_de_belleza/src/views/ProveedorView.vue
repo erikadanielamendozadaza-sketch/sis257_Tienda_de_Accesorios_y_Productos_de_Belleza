@@ -31,11 +31,11 @@ function handleGuardar() {
 </script>
 
 <template>
-  <!-- Encabezado ROSADO con Logo -->
+  <!-- Encabezado -->
   <section class="breadcrumb-option">
-    <div class="container">
+    <div class="container-fluid">
       <div class="row">
-        <div class="col-lg-12">
+        <div class="col-12">
           <div class="breadcrumb__text">
             <h4>Proveedores</h4>
             <div class="breadcrumb__links">
@@ -49,7 +49,7 @@ function handleGuardar() {
 
   <!-- Contenido -->
   <section class="shop spad">
-    <div class="container">
+    <div class="container-fluid">
       <!-- Header con Logo -->
       <div class="crud-header">
         <!-- Logo a la izquierda -->
@@ -92,6 +92,7 @@ function handleGuardar() {
 .breadcrumb-option {
   padding-top: 50px;
   padding-bottom: 30px;
+  background: #fffafc;
 }
 
 .breadcrumb__text {
@@ -191,5 +192,24 @@ function handleGuardar() {
   border-color: #db2777 !important;
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(236, 72, 153, 0.4);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .crud-header {
+    justify-content: center;
+    text-align: center;
+    flex-wrap: wrap;
+  }
+  
+  .header-content {
+    text-align: center;
+    order: 3;
+    width: 100%;
+  }
+  
+  .breadcrumb__text h4 {
+    font-size: 28px;
+  }
 }
 </style>

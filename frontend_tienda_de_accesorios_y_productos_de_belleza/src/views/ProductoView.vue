@@ -31,11 +31,11 @@ function handleGuardar() {
 </script>
 
 <template>
-  <!-- Encabezado ROSADO con Logo -->
+  <!-- Encabezado -->
   <section class="breadcrumb-option">
-    <div class="container">
+    <div class="container-fluid">
       <div class="row">
-        <div class="col-lg-12">
+        <div class="col-12">
           <div class="breadcrumb__text">
             <h4>Productos</h4>
             <div class="breadcrumb__links">
@@ -49,10 +49,9 @@ function handleGuardar() {
 
   <!-- Contenido -->
   <section class="shop spad">
-    <div class="container">
-      <!-- Header con Logo -->
+    <div class="container-fluid">
+      <!-- Header -->
       <div class="crud-header">
-        <!-- Logo a la izquierda -->
         <div class="header-logo">
           <img src="@/assets/img/ze_da_logo.jpeg" alt="Ze & Da" class="logo-img" />
         </div>
@@ -70,7 +69,7 @@ function handleGuardar() {
         />
       </div>
 
-      <!-- Container crema -->
+      <!-- Container -->
       <div class="crud-container">
         <ProductoList ref="productoListRef" @edit="handleEdit" />
       </div>
@@ -92,6 +91,7 @@ function handleGuardar() {
 .breadcrumb-option {
   padding-top: 50px;
   padding-bottom: 30px;
+  background: #fffafc;
 }
 
 .breadcrumb__text {
@@ -128,7 +128,7 @@ function handleGuardar() {
   gap: 20px;
 }
 
-/* Logo */
+/* Logo - GRANDE */
 .header-logo {
   flex-shrink: 0;
 }
@@ -165,7 +165,7 @@ function handleGuardar() {
   font-weight: 500;
 }
 
-/* Container crema */
+/* Container */
 .crud-container {
   background: #fffafc;
   border-radius: 16px;
@@ -174,7 +174,7 @@ function handleGuardar() {
   border: 1px solid #fce7f3;
 }
 
-/* Botón rosa */
+/* Botón */
 .btn-rosa {
   background: #ec4899 !important;
   border-color: #ec4899 !important;
@@ -191,5 +191,24 @@ function handleGuardar() {
   border-color: #db2777 !important;
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(236, 72, 153, 0.4);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .crud-header {
+    justify-content: center;
+    text-align: center;
+    flex-wrap: wrap;
+  }
+  
+  .header-content {
+    text-align: center;
+    order: 3;
+    width: 100%;
+  }
+  
+  .breadcrumb__text h4 {
+    font-size: 28px;
+  }
 }
 </style>

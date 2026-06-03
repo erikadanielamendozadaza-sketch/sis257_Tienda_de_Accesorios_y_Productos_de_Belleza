@@ -267,6 +267,7 @@ watch(
             dateFormat="dd/mm/yy"
             :showIcon="true"
             placeholder="dd/mm/aa"
+            :minDate="new Date()"  
           />
         </div>
 
