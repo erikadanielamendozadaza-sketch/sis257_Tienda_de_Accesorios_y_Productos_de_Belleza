@@ -201,7 +201,102 @@ function selectProducto(producto: Producto) {
 function removeDetalle(index: number) {
   detalles.value.splice(index, 1)
 }
-//aqui
+
+function actualizarSubtotal(index: number, nuevaCantidad: number) {
+  if (nuevaCantidad <= 0) {
+    removeDetalle(index)
+    return
+  }
+
+  const detalle = detalles.value[index]
+  if (!detalle || !detalle.producto) return
+  const producto = detalle.producto
+
+  if (nuevaCantidad > producto.stock) {
+    alert('Stock insuficiente')
+    return
+  }
+
+  const detalleActual = detalles.value[index]
+  if (!detalleActual) return
+
+  detalleActual.cantidad = nuevaCantidad
+  detalleActual.subtotal = nuevaCantidad * Number(producto.precioUnitario)
+}
+
+async function guardarVenta() {
+  if (!clienteSeleccionado.value) {
+    alert('Seleccione un cliente')
+    return
+  }
+
+  if (!clienteSeleccionado.value.razonSocial) {
+    alert('Seleccione un cliente válido')
+    return
+  }
+
+  if (detalles.value.length === 0) {
+    alert('Agregue productos')
+    return
+  }
+
+  try {
+    const emp = getEmpleadoInfo()
+    const descuento = tieneDescuento.value ? descuentoPorcentaje.value : 0
+
+    const ventaBody = {
+      idCliente: clienteSeleccionado.value.id,
+      idEmpleado: emp?.id || 1,
+      fecha: fecha.value,
+      total: total.value,
+      descuento: descuento,
+    }
+
+    const ventaResponse = await http.post('ventas', ventaBody)
+    const ventaId = ventaResponse.data.id
+
+    for (const detalle of detalles.value) {
+      const detalleBody = {
+        idVenta: ventaId,
+        idProducto: detalle.idProducto,
+        cantidad: detalle.cantidad,
+        precioUnitario: detalle.precioUnitario,
+        descuento: detalle.descuento,
+        subtotal: detalle.subtotal,
+      }
+
+      await http.post('detalles-venta', detalleBody)
+
+      const producto = detalle.producto
+      if (producto) {
+        await http.patch(`productos/${producto.id}`, {
+          stock: producto.stock - detalle.cantidad,
+        })
+      }
+    }
+
+    ventaResumen.value = {
+      id: ventaId,
+      cliente: clienteSeleccionado.value?.razonSocial || 'Cliente',
+      productos: detalles.value.length,
+      total: total.value,
+      descuento: descuento,
+    }
+
+    showVentaExitosa.value = true
+
+    clienteSeleccionado.value = null
+    detalles.value = []
+    loadData()
+  } catch (error: any) {
+    console.error(error)
+    alert(error?.response?.data?.message || 'Error')
+  }
+}
+
+function cancelar() {
+  router.push('/')
+}
 </script>
 
 <template>
@@ -291,7 +386,52 @@ function removeDetalle(index: number) {
           <i class="pi pi-plus"></i> Agregar Producto
         </button>
 
-        //aqui
+        <table class="detalle-table">
+          <thead>
+            <tr>
+              <th>Producto</th>
+              <th>Precio</th>
+              <th>Cantidad</th>
+              <th>Subtotal</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(detalle, index) in detalles" :key="index">
+              <td>{{ detalle.producto?.nombre }}</td>
+              <td>Bs. {{ Number(detalle.precioUnitario).toFixed(2) }}</td>
+              <td>
+                <input
+                  type="number"
+                  :value="detalle.cantidad"
+                  @change="
+                    (e: Event) =>
+                      actualizarSubtotal(index, Number((e.target as HTMLInputElement).value))
+                  "
+                  min="1"
+                  :max="detalle.producto?.stock || 1"
+                  class="cantidad-input"
+                />
+              </td>
+              <td class="subtotal-cell">Bs. {{ Number(detalle.subtotal).toFixed(2) }}</td>
+              <td>
+                <button class="btn-delete" @click="removeDetalle(index)">
+                  <i class="pi pi-trash"></i>
+                </button>
+              </td>
+            </tr>
+            <tr v-if="detalles.length === 0">
+              <td colspan="5" class="empty-detail">Agregue productos para la venta</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="venta-actions">
+          <button class="btn-cancel" @click="cancelar">Cancelar</button>
+          <button class="btn-save" @click="guardarVenta" :disabled="detalles.length === 0">
+            <i class="pi pi-save"></i> Guardar Venta
+          </button>
+        </div>
       </div>
 
       <div class="venta-list-container">

@@ -32,7 +32,35 @@ async function loadData() {
   }
 }
 
-//aqui
+function getDescuentoTotal() {
+  const subtotal = detalles.value.reduce((sum, d) => sum + Number(d.subtotal), 0)
+
+  const totalVenta = Number(venta.value?.total || 0)
+
+  return (subtotal - totalVenta).toFixed(2)
+}
+
+function getPorcentajeDescuento() {
+  const subtotal = detalles.value.reduce((sum, d) => sum + Number(d.subtotal), 0)
+
+  const totalVenta = Number(venta.value?.total || 0)
+
+  const descuento = subtotal - totalVenta
+
+  if (subtotal > 0) {
+    return Math.round((descuento / subtotal) * 100)
+  }
+
+  return 0
+}
+
+function goBack() {
+  router.push('/ventas')
+}
+
+onMounted(() => {
+  loadData()
+})
 </script>
 
 <template>
@@ -56,7 +84,33 @@ async function loadData() {
       <div v-if="error" class="error-message">{{ error }}</div>
 
       <!-- Info venta -->
-      //aqui
+      <div v-if="venta" class="venta-info-card">
+        <div class="info-header">
+          <h5>Venta #{{ venta.id }}</h5>
+          <span class="fecha">{{ new Date(venta.fecha).toLocaleDateString('es-VE') }}</span>
+        </div>
+        <div class="info-grid">
+          <div class="info-item">
+            <label>Cliente</label>
+            <span>{{ venta.cliente?.razonSocial || 'Cliente' }}</span>
+          </div>
+          <div class="info-item">
+            <label>Descuento</label>
+
+            <span v-if="getPorcentajeDescuento() > 0" class="descuento-badge">
+              {{ getPorcentajeDescuento() }}% OFF
+            </span>
+
+            <span v-if="getPorcentajeDescuento() > 0"> Bs. {{ getDescuentoTotal() }} </span>
+
+            <span v-else class="sin-desc">0%</span>
+          </div>
+          <div class="info-item">
+            <label>Total</label>
+            <span class="total-value">Bs. {{ Number(venta.total).toFixed(2) }}</span>
+          </div>
+        </div>
+      </div>
 
       <div v-if="detalles.length > 0" class="detalle-container">
         <h5 class="list-title">📦 Productos</h5>
