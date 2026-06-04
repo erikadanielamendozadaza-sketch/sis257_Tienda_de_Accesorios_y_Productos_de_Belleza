@@ -10,9 +10,10 @@ import { ClientesModule } from './clientes/clientes.module';
 import { VentasModule } from './ventas/ventas.module';
 import { ProveedoresModule } from './proveedores/proveedores.module';
 import { EmpleadosModule } from './empleados/empleados.module';
-import { DetalleVentasModule } from './detalle_ventas/detalle_ventas.module';
+
 import { MarcasModule } from './marcas/marcas.module';
 import { AuthModule } from './auth/auth.module';
+import { DetallesVentaModule } from './detalle_ventas/detalles_venta.module';
 
 @Module({
   imports: [
@@ -35,7 +36,7 @@ import { AuthModule } from './auth/auth.module';
     VentasModule,
     ProveedoresModule,
     EmpleadosModule,
-    DetalleVentasModule,
+    DetallesVentaModule,
     MarcasModule,
     AuthModule,
   ],

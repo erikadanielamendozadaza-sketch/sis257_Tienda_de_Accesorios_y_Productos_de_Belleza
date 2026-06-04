@@ -6,6 +6,8 @@ import PrimeVue from 'primevue/config'
 import Aura from '@primevue/themes/aura'
 import 'primeicons/primeicons.css'
 import 'primeflex/primeflex.min.css'
+import Dialog from 'primevue/dialog'     
+import Button from 'primevue/button' 
 
 import App from './App.vue'
 import router from './router'
@@ -24,5 +26,8 @@ app.use(PrimeVue, {
     },
   },
 })
+
+app.component('Dialog', Dialog)  
+app.component('Button', Button)
 
 app.mount('#app')

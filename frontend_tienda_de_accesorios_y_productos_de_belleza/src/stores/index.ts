@@ -4,11 +4,26 @@ import http from '@/plugins/axios'
 import router from '@/router'
 
 const useAuthStore = defineStore('auth', {
-  state: () => ({
-    empleado: localStorage.getItem('empleado') || '',
-    token: getTokenFromLocalStorage(),
-    returnUrl: null || ''
-  }),
+  state: () => {
+    // Obtener empleado del localStorage de forma segura
+    let empleadoLocal = null
+    const empStorage = localStorage.getItem('empleado')
+    
+    // Solo parsear si es JSON válido
+    if (empStorage && empStorage.startsWith('{')) {
+      try {
+        empleadoLocal = JSON.parse(empStorage)
+      } catch {
+        empleadoLocal = null
+      }
+    }
+    
+    return {
+      empleado: empleadoLocal,
+      token: getTokenFromLocalStorage(),
+      returnUrl: null || ''
+    }
+  },
   getters: {},
   actions: {
     async login(usuario: string, clave: string) {
@@ -16,16 +31,18 @@ const useAuthStore = defineStore('auth', {
         this.empleado = response.data.usuario
         this.token = response.data.access_token
 
-        localStorage.setItem('empleado', this.empleado || '')
+        localStorage.setItem('empleado', JSON.stringify(response.data.usuario))
         localStorage.setItem('token', this.token || '')
 
         router.push(this.returnUrl || '/')
       })
     },
     logout() {
-      localStorage.clear()
-      this.$reset()
-      router.push('login')
+      localStorage.removeItem('empleado')
+      localStorage.removeItem('token')
+      this.empleado = null
+      this.token = ''
+      router.push('/login')
     }
   }
 })

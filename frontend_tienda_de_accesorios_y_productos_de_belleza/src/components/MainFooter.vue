@@ -24,7 +24,6 @@
           </div>
         </div>
         
-        <!-- Enlaces rápidos -->
         <div class="col-lg-2 offset-lg-1 col-md-3 col-sm-6">
           <div class="footer__widget">
             <h6>Enlaces</h6>
@@ -32,12 +31,12 @@
               <li><RouterLink to="/productos">Productos</RouterLink></li>
               <li><RouterLink to="/clientes">Clientes</RouterLink></li>
               <li><RouterLink to="/proveedores">Proveedores</RouterLink></li>
+              <li><RouterLink to="/ventas">Ventas</RouterLink></li>
               <li><RouterLink to="/about">Nosotros</RouterLink></li>
             </ul>
           </div>
         </div>
-        
-        <!-- Ayuda -->
+
         <div class="col-lg-2 col-md-3 col-sm-6">
           <div class="footer__widget">
             <h6>Ayuda</h6>
@@ -49,8 +48,7 @@
             </ul>
           </div>
         </div>
-        
-        <!-- Newsletter -->
+
         <div class="col-lg-3 col-md-6 col-sm-6">
           <div class="footer__widget">
             <h6>✨ NewLetter</h6>
@@ -67,7 +65,6 @@
         </div>
       </div>
       
-      <!-- Copyright -->
       <div class="row">
         <div class="col-lg-12 text-center">
           <div class="footer__copyright__text">
@@ -82,14 +79,12 @@
 </template>
 
 <style scoped>
-/* Footer */
+
 .footer {
   background: #1f1f1f;
   padding: 60px 0 20px;
   color: white;
 }
-
-/* About */
 .footer__about {
   margin-bottom: 30px;
 }
@@ -107,7 +102,6 @@
   margin-bottom: 20px;
 }
 
-/* Redes sociales */
 .footer__social {
   display: flex;
   gap: 12px;
@@ -130,7 +124,6 @@
   transform: translateY(-3px);
 }
 
-/* Widget títulos */
 .footer__widget h6 {
   color: #ec4899;
   font-weight: 600;
@@ -140,7 +133,6 @@
   margin-bottom: 20px;
 }
 
-/* Widget links */
 .footer__widget ul {
   list-style: none;
   padding: 0;
@@ -161,7 +153,6 @@
   color: #ec4899;
 }
 
-/* Newsletter */
 .footer__newslatter p {
   color: #aaa;
   font-size: 14px;

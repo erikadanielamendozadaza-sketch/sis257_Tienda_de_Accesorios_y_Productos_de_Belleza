@@ -14,7 +14,6 @@ import { UpdateVentaDto } from './dto/update-venta.dto';
 import { ApiBearerAuth } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 
-
 @ApiBearerAuth()
 @UseGuards(JwtAuthGuard)
 @Controller('ventas')
@@ -30,11 +29,17 @@ export class VentasController {
   findAll() {
     return this.ventasService.findAll();
   }
-
+  
+  @Get('contar/cliente/:idCliente')
+  contarPorCliente(@Param('idCliente') idCliente: string) {
+    return this.ventasService.contarPorCliente(+idCliente);
+  }
+  
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.ventasService.findOne(+id);
   }
+
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateVentaDto: UpdateVentaDto) {

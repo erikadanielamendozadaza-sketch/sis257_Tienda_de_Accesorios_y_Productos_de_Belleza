@@ -83,6 +83,10 @@ export class VentasService {
     return venta;
   }
 
+  async contarPorCliente(idCliente: number) {
+    return this.ventaRepository.count({ where: { idCliente } });
+  }
+
   async update(id: number, updateVentaDto: UpdateVentaDto): Promise<Venta> {
     const venta = await this.findOne(id);
 

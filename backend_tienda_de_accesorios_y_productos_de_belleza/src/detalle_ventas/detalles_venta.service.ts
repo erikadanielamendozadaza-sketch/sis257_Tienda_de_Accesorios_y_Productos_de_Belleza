@@ -10,7 +10,7 @@ import { DetalleVenta } from './entities/detalle_venta.entity';
 import { Repository } from 'typeorm';
 
 @Injectable()
-export class DetalleVentasService {
+export class DetallesVentaService {
   constructor(
     @InjectRepository(DetalleVenta)
     private readonly detalleVentaRepository: Repository<DetalleVenta>,
@@ -94,6 +94,13 @@ export class DetalleVentasService {
     return detalleVenta;
   }
 
+  async findByVenta(idVenta: number) {
+    return this.detalleVentaRepository.find({
+      where: { idVenta },
+      relations: ['producto'],
+    });
+  }
+
   async update(
     id: number,
     updateDetalleVentaDto: UpdateDetalleVentaDto,
@@ -118,14 +125,11 @@ export class DetalleVentasService {
     }
 
     const subtotal = cantidad * precio - descuento;
-
     if (subtotal < 0) {
       throw new ConflictException('El subtotal no puede ser negativo');
     }
-
     Object.assign(detalleVenta, updateDetalleVentaDto);
     detalleVenta.subtotal = subtotal;
-
     return this.detalleVentaRepository.save(detalleVenta);
   }
 

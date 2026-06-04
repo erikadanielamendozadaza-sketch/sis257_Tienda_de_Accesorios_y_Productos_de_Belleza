@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
-import { IsDateString, IsDefined, IsInt, Min } from 'class-validator';
+import { IsDateString, IsDefined, IsInt, IsNumber, Min } from 'class-validator';
 
 export class CreateVentaDto {
   @ApiProperty()
@@ -20,7 +20,7 @@ export class CreateVentaDto {
 
   @ApiProperty()
   @Type(() => Number)
-  @IsInt({ message: 'La cantidad mínima debe ser un número entero' })
-  @Min(0, { message: 'La cantidad mínima no puede ser negativa' })
+  @IsNumber({}, { message: 'El total debe ser un número válido' })
+  @Min(0, { message: 'El total no puede ser negativo' })
   readonly total: number;
 }

@@ -25,7 +25,7 @@ function logout() {
         <p>✨ Tu tienda de belleza favorita ✨</p>
       </div>
     </div>
-    
+
     <header class="header">
       <div class="header__top">
         <div class="container">
@@ -50,7 +50,7 @@ function logout() {
           </div>
         </div>
       </div>
-      
+
       <div class="container">
         <div class="row">
           <div class="col-lg-3 col-md-3">
@@ -60,16 +60,14 @@ function logout() {
               </RouterLink>
             </div>
           </div>
-          
+
           <div class="col-lg-6 col-md-6">
             <nav class="header__menu mobile-menu">
               <ul>
-                <!-- Inicio - SIEMPRE visible -->
                 <li>
                   <RouterLink to="/" class="nav-link">Inicio</RouterLink>
                 </li>
-                
-                <!-- SOLO si está logueado -->
+
                 <li v-if="authStore.token">
                   <RouterLink to="/productos" class="nav-link">Productos</RouterLink>
                 </li>
@@ -79,25 +77,25 @@ function logout() {
                 <li v-if="authStore.token">
                   <RouterLink to="/proveedores" class="nav-link">Proveedores</RouterLink>
                 </li>
-                
-                <!-- Si no está logueado -->
+                <li v-if="authStore.token">
+                  <RouterLink to="/ventas" class="nav-link">Ventas</RouterLink>
+                </li>
+
                 <li v-if="!authStore.token">
                   <RouterLink to="/login" class="nav-link">Iniciar Sesión</RouterLink>
                 </li>
               </ul>
             </nav>
           </div>
-          
         </div>
         <div class="canvas__open"><i class="fa fa-bars"></i></div>
       </div>
     </header>
-    
   </div>
 </template>
 
 <style scoped>
-/* Logo */
+
 .logo-img {
   width: 100%;
   max-width: 300px;
@@ -105,7 +103,6 @@ function logout() {
   object-fit: contain;
 }
 
-/* Nav link base */
 .nav-link {
   position: relative;
   color: #1f1f1f;
@@ -118,13 +115,11 @@ function logout() {
   color: #ec4899;
 }
 
-/* Link activo - ROSA */
 .nav-link.router-link-active {
   color: #ec4899;
   font-weight: 600;
 }
 
-/* Barra ROSA debajo del activo */
 .nav-link.router-link-active::after {
   content: '';
   position: absolute;
@@ -137,7 +132,6 @@ function logout() {
   border-radius: 2px;
 }
 
-/* Login link */
 .login-link {
   color: #ec4899 !important;
   font-weight: 600;
@@ -150,7 +144,6 @@ function logout() {
   color: #db2777 !important;
 }
 
-/* Logout link */
 .logout-link {
   color: #666 !important;
   cursor: pointer;
