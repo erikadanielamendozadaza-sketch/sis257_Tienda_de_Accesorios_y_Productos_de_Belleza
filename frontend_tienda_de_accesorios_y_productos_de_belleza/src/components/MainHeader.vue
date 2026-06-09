@@ -27,33 +27,9 @@ function logout() {
     </div>
 
     <header class="header">
-      <div class="header__top">
-        <div class="container">
-          <div class="row">
-            <div class="col-lg-6 col-md-7">
-              <div class="header__top__left">
-                <p>✨ Moda y estilo al alcance ✨</p>
-              </div>
-            </div>
-            <div class="col-lg-6 col-md-5">
-              <div class="header__top__right">
-                <div class="header__top__links">
-                  <RouterLink to="/login" v-if="!authStore.token" class="login-link">
-                    <i class="pi pi-sign-in"></i> Iniciar Sesión
-                  </RouterLink>
-                  <a v-else @click="logout()" class="logout-link">
-                    <i class="pi pi-sign-out"></i> Salir
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
       <div class="container">
         <div class="row">
-          <div class="col-lg-3 col-md-3">
+          <div class="col-lg-2 col-md-2">
             <div class="header__logo">
               <RouterLink to="/">
                 <img src="@/assets/img/ze_logo_largo.jpeg" alt="Ze & Da" class="logo-img" />
@@ -61,7 +37,7 @@ function logout() {
             </div>
           </div>
 
-          <div class="col-lg-6 col-md-6">
+          <div class="col-lg-10 col-md-10">
             <nav class="header__menu mobile-menu">
               <ul>
                 <li>
@@ -81,6 +57,10 @@ function logout() {
                   <RouterLink to="/ventas" class="nav-link">Ventas</RouterLink>
                 </li>
 
+                <li v-if="authStore.token">
+                  <a @click="logout()" class="nav-link logout-nav"> Salir </a>
+                </li>
+
                 <li v-if="!authStore.token">
                   <RouterLink to="/login" class="nav-link">Iniciar Sesión</RouterLink>
                 </li>
@@ -91,22 +71,68 @@ function logout() {
         <div class="canvas__open"><i class="fa fa-bars"></i></div>
       </div>
     </header>
+
+    <div class="header-space"></div>
+
   </div>
 </template>
 
 <style scoped>
 
-.logo-img {
+.logout-nav {
+  background: #ec4899;
+  color: white !important;
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.header__logo {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.header__menu ul {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 25px;
+  flex-wrap: nowrap;
+  margin: 0;
+  padding: 0;
+}
+.header__menu li {
+  white-space: nowrap;
+}
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
-  max-width: 300px;
+  z-index: 9999;
+  background: white;
+  box-shadow: 0 2px 10px rgba(0,0,0,.08);
+}
+
+.header-space {
+  height: 90px;
+}
+
+.logo-img {
+  max-width: 140px;
+  width: 100%;
   height: auto;
-  object-fit: contain;
 }
 
 .nav-link {
   position: relative;
   color: #1f1f1f;
-  font-weight: 500;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  font-size: 14px;
   padding: 10px 15px;
   transition: color 0.3s ease;
 }
