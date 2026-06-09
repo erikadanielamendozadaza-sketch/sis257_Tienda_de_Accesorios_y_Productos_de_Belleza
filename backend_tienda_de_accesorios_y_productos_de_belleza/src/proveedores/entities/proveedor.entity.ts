@@ -14,7 +14,7 @@ export class Proveedor {
   @PrimaryGeneratedColumn('identity')
   id: number;
 
-  @Column('varchar', { length: 100 })
+  @Column('varchar', { length: 100, name: 'nombre_empresa' })
   nombreEmpresa: string;
 
   @Column('varchar', { length: 10 })

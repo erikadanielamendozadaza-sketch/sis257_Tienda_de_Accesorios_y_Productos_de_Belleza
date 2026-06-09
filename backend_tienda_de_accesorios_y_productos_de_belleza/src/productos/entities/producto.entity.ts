@@ -41,16 +41,16 @@ export class Producto {
   @Column('varchar', { length: 255, nullable: true })
   imagen?: string;
 
-  @Column('decimal', { precision: 10, scale: 2 })
+  @Column('decimal', { precision: 10, scale: 2, name: 'precio_unitario' })
   precioUnitario: number;
 
   @Column('int')
   stock: number;
 
-  @Column({ type: 'date', nullable: true })
+  @Column({ type: 'date', nullable: true, name: 'fecha_vencimiento' })
   fechaVencimiento?: Date;
 
-  @Column('int')
+  @Column('int', { name: 'cantidad_minima_stock' })
   cantidadMinimaStock: number;
 
   @CreateDateColumn({ name: 'fecha_creacion' })

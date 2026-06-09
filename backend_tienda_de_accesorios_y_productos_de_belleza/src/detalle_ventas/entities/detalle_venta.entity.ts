@@ -26,7 +26,7 @@ export class DetalleVenta {
   @Column('integer')
   cantidad: number;
 
-  @Column('decimal', { precision: 10, scale: 2 })
+  @Column('decimal', { precision: 10, scale: 2, name: 'precio_unitario' })
   precioUnitario: number;
 
   @Column('decimal', { precision: 10, scale: 2 })

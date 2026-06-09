@@ -14,10 +14,10 @@ export class Cliente {
   @PrimaryGeneratedColumn('identity')
   id: number;
 
-  @Column('varchar', { length: 100 })
+  @Column('varchar', { length: 100, name: 'razon_social' })
   razonSocial: string;
 
-  @Column('varchar', { length: 10 })
+  @Column('varchar', { length: 10, name: 'cedula_identidad' })
   cedulaIdentidad: string;
 
   @CreateDateColumn({ name: 'fecha_creacion' })

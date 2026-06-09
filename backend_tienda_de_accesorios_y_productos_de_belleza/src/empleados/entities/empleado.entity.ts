@@ -17,13 +17,13 @@ export class Empleado {
   @Column('varchar', { length: 50 })
   nombre: string;
 
-  @Column('varchar', { length: 50 })
+  @Column('varchar', { length: 50, name: 'primer_apellido' })
   primerApellido: string;
 
-  @Column('varchar', { length: 50 })
+  @Column('varchar', { length: 50, name: 'segundo_apellido' })
   segundoApellido: string;
 
-  @Column('varchar', { length: 10 })
+  @Column('varchar', { length: 10, name: 'cedula_identidad' })
   cedulaIdentidad: string;
 
   @Column('varchar', { length: 50 })
