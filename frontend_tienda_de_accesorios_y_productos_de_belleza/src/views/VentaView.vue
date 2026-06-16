@@ -145,6 +145,20 @@ async function verificarDescuentoCliente(clienteId: number) {
   }
 }
 
+const busquedaCliente = ref('')
+
+const clientesFiltrados = computed(() => {
+  if (!busquedaCliente.value.trim()) {
+    return clientes.value
+  }
+
+  return clientes.value.filter(
+    (cliente) =>
+      cliente.razonSocial.toLowerCase().includes(busquedaCliente.value.toLowerCase()) ||
+      cliente.cedulaIdentidad.toLowerCase().includes(busquedaCliente.value.toLowerCase()),
+  )
+})
+
 function selectCliente(cliente: Cliente) {
   console.log('Cliente seleccionado:', cliente)
   clienteSeleccionado.value = cliente
@@ -300,21 +314,6 @@ function cancelar() {
 </script>
 
 <template>
-  <section class="breadcrumb-option">
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-12">
-          <div class="breadcrumb__text">
-            <h4>Ventas</h4>
-            <div class="breadcrumb__links">
-              <span>✨ Registro de ventas ✨</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <section class="shop spad">
     <div class="container-fluid">
       <div class="nueva-venta-section">
@@ -337,6 +336,20 @@ function cancelar() {
           <div class="venta-field">
             <label class="field-label">Fecha</label>
             <div class="field-value">{{ fecha.toLocaleDateString('es-VE') }}</div>
+          </div>
+
+          <div class="venta-field cliente-section">
+            <label class="field-label">Cliente</label>
+            <div class="cliente-seleccionado" v-if="clienteSeleccionado">
+              {{ clienteSeleccionado.razonSocial }}
+              <span v-if="tieneDescuento" class="descuento-badge">
+                💕 {{ descuentoPorcentaje }}% dto
+              </span>
+              <button class="btn-cambiar" @click="openClienteDialog">Cambiar</button>
+            </div>
+            <button class="btn-select" @click="openClienteDialog" v-else>
+              Seleccionar Cliente
+            </button>
           </div>
 
           <div class="venta-field">
@@ -369,19 +382,6 @@ function cancelar() {
             <div class="field-total total-pagar">Bs. {{ total.toFixed(2) }}</div>
           </div>
         </div>
-
-        <div class="cliente-section">
-          <label class="field-label">Cliente</label>
-          <div class="cliente-seleccionado" v-if="clienteSeleccionado">
-            {{ clienteSeleccionado.razonSocial }}
-            <span v-if="tieneDescuento" class="descuento-badge">
-              💕 {{ descuentoPorcentaje }}% dto
-            </span>
-            <button class="btn-cambiar" @click="openClienteDialog">Cambiar</button>
-          </div>
-          <button class="btn-select" @click="openClienteDialog" v-else>Seleccionar Cliente</button>
-        </div>
-
         <button class="btn-add" @click="openProductoDialog">
           <i class="pi pi-plus"></i> Agregar Producto
         </button>
@@ -391,6 +391,7 @@ function cancelar() {
             <tr>
               <th>Producto</th>
               <th>Precio</th>
+              <th>Stock</th>
               <th>Cantidad</th>
               <th>Subtotal</th>
               <th></th>
@@ -400,6 +401,9 @@ function cancelar() {
             <tr v-for="(detalle, index) in detalles" :key="index">
               <td>{{ detalle.producto?.nombre }}</td>
               <td>Bs. {{ Number(detalle.precioUnitario).toFixed(2) }}</td>
+              <td class="stock-cell">
+                {{ detalle.producto?.stock }}
+              </td>
               <td>
                 <input
                   type="number"
@@ -421,7 +425,7 @@ function cancelar() {
               </td>
             </tr>
             <tr v-if="detalles.length === 0">
-              <td colspan="5" class="empty-detail">Agregue productos para la venta</td>
+              <td colspan="6" class="empty-detail">Agregue productos para la venta</td>
             </tr>
           </tbody>
         </table>
@@ -473,6 +477,14 @@ function cancelar() {
     :modal="true"
     :style="{ width: '40rem' }"
   >
+    <div class="buscador-cliente">
+      <input
+        v-model="busquedaCliente"
+        type="text"
+        placeholder="🔍 Buscar cliente por nombre o cédula..."
+        class="input-busqueda"
+      />
+    </div>
     <table class="dialog-table">
       <thead>
         <tr>
@@ -482,7 +494,7 @@ function cancelar() {
         </tr>
       </thead>
       <tbody>
-        <tr v-for="cliente in clientes" :key="cliente.id">
+        <tr v-for="cliente in clientesFiltrados" :key="cliente.id">
           <td>{{ cliente.razonSocial }}</td>
           <td>{{ cliente.cedulaIdentidad }}</td>
           <td>
@@ -593,6 +605,8 @@ function cancelar() {
   padding: 15px;
   border-radius: 12px;
   margin-bottom: 20px;
+  flex: 2;
+  min-width: 280px;
 }
 
 .cliente-actions {
@@ -607,6 +621,10 @@ function cancelar() {
   gap: 10px;
   color: #1f1f1f;
   font-weight: 500;
+}
+
+.buscador-cliente {
+  margin-bottom: 15px;
 }
 
 .btn-cambiar {
@@ -733,11 +751,12 @@ function cancelar() {
 
 .venta-header {
   display: flex;
-  gap: 25px;
+  gap: 35px;
   margin-bottom: 20px;
   background: white;
   padding: 15px;
   border-radius: 12px;
+  align-items: center;
 }
 
 .venta-field {
@@ -1120,5 +1139,26 @@ function cancelar() {
 
 .btn-detalle:hover {
   background: #2563eb;
+}
+
+.cliente-field {
+  min-width: 220px;
+}
+
+.cliente-seleccionado-header {
+  font-size: 15px;
+  color: #1f1f1f;
+  font-weight: 600;
+}
+
+.btn-select-mini {
+  background: #ec4899;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 13px;
+
 }
 </style>
