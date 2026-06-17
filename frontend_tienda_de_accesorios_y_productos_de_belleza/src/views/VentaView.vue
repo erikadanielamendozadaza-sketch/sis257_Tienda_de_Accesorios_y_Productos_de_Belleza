@@ -42,6 +42,13 @@ const busquedaProducto = ref('')
 const showClienteDialog = ref(false)
 const showProductoDialog = ref(false)
 
+const showNuevoClienteDialog = ref(false)
+
+const nuevoCliente = ref({
+  razonSocial: '',
+  cedulaIdentidad: '',
+})
+
 function getEmpleadoInfo() {
   const stored = localStorage.getItem('empleado')
 
@@ -89,7 +96,6 @@ const total = computed(() => {
 const subtotalSinDescuento = computed(() => {
   return detalles.value.reduce((sum, d) => sum + (d.subtotal || 0), 0)
 })
-
 
 async function loadClientes() {
   clientes.value = await http.get('clientes').then((res) => res.data)
@@ -149,7 +155,6 @@ const clientesFiltrados = computed(() => {
 })
 
 function selectCliente(cliente: Cliente) {
-
   clienteSeleccionado.value = cliente
   showClienteDialog.value = false
 
@@ -163,11 +168,31 @@ function selectCliente(cliente: Cliente) {
 }
 
 function agregarNuevoCliente() {
-  router.push('/clientes').then(() => {
-    if (clienteSeleccionado.value) {
-      verificarDescuentoCliente(clienteSeleccionado.value.id)
+  showNuevoClienteDialog.value = true
+}
+
+async function guardarNuevoCliente() {
+  try {
+    const response = await http.post('clientes', nuevoCliente.value)
+
+    const clienteCreado = response.data
+
+    clienteSeleccionado.value = clienteCreado
+
+    await loadClientes()
+
+    showNuevoClienteDialog.value = false
+    showClienteDialog.value = false
+
+    nuevoCliente.value = {
+      razonSocial: '',
+      cedulaIdentidad: '',
     }
-  })
+
+  } catch (error) {
+    console.error(error)
+    alert('Error al registrar cliente')
+  }
 }
 
 function openProductoDialog() {
@@ -466,6 +491,34 @@ function cancelar() {
       </tbody>
     </table>
   </Dialog>
+
+  <Dialog
+  v-model:visible="showNuevoClienteDialog"
+  header="Nuevo Cliente"
+  :modal="true"
+  :style="{ width: '30rem' }"
+>
+  <div class="form-cliente">
+
+    <input
+      v-model="nuevoCliente.razonSocial"
+      placeholder="Nombre o Razón Social"
+      class="input-busqueda"
+    />
+
+    <input
+      v-model="nuevoCliente.cedulaIdentidad"
+      placeholder="CI"
+      class="input-busqueda"
+    />
+    <div style="margin-top:15px">
+      <button class="btn-save" @click="guardarNuevoCliente">
+        Guardar Cliente
+      </button>
+    </div>
+
+  </div>
+</Dialog>
 
   <Dialog
     v-model:visible="showProductoDialog"
