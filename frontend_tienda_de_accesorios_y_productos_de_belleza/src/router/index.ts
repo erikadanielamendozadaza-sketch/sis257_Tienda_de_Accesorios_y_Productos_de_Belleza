@@ -48,6 +48,11 @@ const router = createRouter({
       component: () => import('@/views/DetalleVentaView.vue'),
     },
     {
+      path: '/historial-ventas',
+      name: 'historial-ventas',
+      component: () => import('@/views/HistorialVentasView.vue'),
+    },
+    {
       path: '/login',
       name: 'login',
       component: () => import('../views/LoginView.vue'),

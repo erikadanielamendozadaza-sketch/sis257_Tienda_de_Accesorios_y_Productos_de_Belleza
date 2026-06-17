@@ -56,7 +56,9 @@ function logout() {
                 <li v-if="authStore.token">
                   <RouterLink to="/ventas" class="nav-link">Ventas</RouterLink>
                 </li>
-
+                <li v-if="authStore.token">
+                  <RouterLink to="/historial-ventas" class="nav-link">Detalle de Venta</RouterLink>
+                </li>
                 <li v-if="authStore.token">
                   <a @click="logout()" class="nav-link logout-nav"> Salir </a>
                 </li>
@@ -91,6 +93,7 @@ function logout() {
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  margin-left: -100px;
 }
 
 .header__menu ul {
@@ -111,13 +114,13 @@ function logout() {
   top: 0;
   left: 0;
   width: 100%;
-  z-index: 9999;
+  z-index: 1000;
   background: white;
   box-shadow: 0 2px 10px rgba(0,0,0,.08);
 }
 
 .header-space {
-  height: 90px;
+  height: 55px;
 }
 
 .logo-img {

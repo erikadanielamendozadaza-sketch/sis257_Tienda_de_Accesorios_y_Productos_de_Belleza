@@ -145,7 +145,7 @@ onMounted(() => {
       </div>
 
       <div class="volver-section">
-        <button class="btn-volver" @click="goBack"><i class="pi pi-arrow-left"></i> Volver</button>
+        <button class="btn-volver" @click="router.push(`/historial-ventas/`)"><i class="pi pi-arrow-left"></i> Volver</button>
       </div>
     </div>
   </section>

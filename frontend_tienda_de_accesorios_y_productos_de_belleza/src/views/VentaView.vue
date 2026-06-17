@@ -1,15 +1,13 @@
 <script setup lang="ts">
 import type { Cliente } from '@/models/cliente'
 import type { Producto } from '@/models/producto'
-import type { Venta } from '@/models/venta'
 import http from '@/plugins/axios'
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import Dialog from 'primevue/dialog'
 
 const router = useRouter()
 
-const ventas = ref<Venta[]>([])
 const clientes = ref<Cliente[]>([])
 const productos = ref<Producto[]>([])
 const clienteSeleccionado = ref<Cliente | null>(null)
@@ -92,13 +90,6 @@ const subtotalSinDescuento = computed(() => {
   return detalles.value.reduce((sum, d) => sum + (d.subtotal || 0), 0)
 })
 
-async function loadData() {
-  try {
-    ventas.value = await http.get('ventas').then((res) => res.data)
-  } catch (e) {
-    console.error('Error:', e)
-  }
-}
 
 async function loadClientes() {
   clientes.value = await http.get('clientes').then((res) => res.data)
@@ -106,6 +97,8 @@ async function loadClientes() {
 
 async function loadProductos() {
   productos.value = await http.get('productos').then((res) => res.data)
+
+  productos.value.sort((a, b) => a.nombre.localeCompare(b.nombre))
 }
 
 const productosFiltrados = computed(() => {
@@ -116,10 +109,6 @@ const productosFiltrados = computed(() => {
   return productos.value.filter((producto) =>
     producto.nombre.toLowerCase().includes(busquedaProducto.value.toLowerCase()),
   )
-})
-
-onMounted(() => {
-  loadData()
 })
 
 function openClienteDialog() {
@@ -160,7 +149,7 @@ const clientesFiltrados = computed(() => {
 })
 
 function selectCliente(cliente: Cliente) {
-  console.log('Cliente seleccionado:', cliente)
+
   clienteSeleccionado.value = cliente
   showClienteDialog.value = false
 
@@ -224,18 +213,17 @@ function actualizarSubtotal(index: number, nuevaCantidad: number) {
 
   const detalle = detalles.value[index]
   if (!detalle || !detalle.producto) return
+
   const producto = detalle.producto
 
   if (nuevaCantidad > producto.stock) {
-    alert('Stock insuficiente')
-    return
+    alert(`Solo hay ${producto.stock} unidades disponibles`)
+
+    nuevaCantidad = producto.stock
   }
 
-  const detalleActual = detalles.value[index]
-  if (!detalleActual) return
-
-  detalleActual.cantidad = nuevaCantidad
-  detalleActual.subtotal = nuevaCantidad * Number(producto.precioUnitario)
+  detalle.cantidad = nuevaCantidad
+  detalle.subtotal = nuevaCantidad * Number(producto.precioUnitario)
 }
 
 async function guardarVenta() {
@@ -301,7 +289,6 @@ async function guardarVenta() {
 
     clienteSeleccionado.value = null
     detalles.value = []
-    loadData()
   } catch (error: any) {
     console.error(error)
     alert(error?.response?.data?.message || 'Error')
@@ -389,6 +376,7 @@ function cancelar() {
         <table class="detalle-table">
           <thead>
             <tr>
+              <th>Código</th>
               <th>Producto</th>
               <th>Precio</th>
               <th>Stock</th>
@@ -399,6 +387,7 @@ function cancelar() {
           </thead>
           <tbody>
             <tr v-for="(detalle, index) in detalles" :key="index">
+              <td>{{ detalle.producto?.codigo }}</td>
               <td>{{ detalle.producto?.nombre }}</td>
               <td>Bs. {{ Number(detalle.precioUnitario).toFixed(2) }}</td>
               <td class="stock-cell">
@@ -424,8 +413,9 @@ function cancelar() {
                 </button>
               </td>
             </tr>
+
             <tr v-if="detalles.length === 0">
-              <td colspan="6" class="empty-detail">Agregue productos para la venta</td>
+              <td colspan="7" class="empty-detail">Agregue productos para la venta</td>
             </tr>
           </tbody>
         </table>
@@ -436,37 +426,6 @@ function cancelar() {
             <i class="pi pi-save"></i> Guardar Venta
           </button>
         </div>
-      </div>
-
-      <div class="venta-list-container">
-        <h5 class="list-title">Historial de Ventas</h5>
-        <table class="venta-list-table">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Fecha</th>
-              <th>Cliente</th>
-              <th>Total</th>
-              <th>Detalle de la Venta</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="venta in ventas" :key="venta.id">
-              <td class="venta-id">#{{ venta.id }}</td>
-              <td>{{ new Date(venta.fecha).toLocaleDateString('es-VE') }}</td>
-              <td>{{ venta.cliente?.razonSocial || 'Cliente' }}</td>
-              <td class="venta-total">Bs. {{ Number(venta.total).toFixed(2) }}</td>
-              <td>
-                <button class="btn-detalle" @click="router.push(`/detalle-venta/${venta.id}`)">
-                  Ver detalle
-                </button>
-              </td>
-            </tr>
-            <tr v-if="ventas.length === 0">
-              <td colspan="5" class="empty-message">No hay ventas</td>
-            </tr>
-          </tbody>
-        </table>
       </div>
     </div>
   </section>
@@ -484,6 +443,9 @@ function cancelar() {
         placeholder="🔍 Buscar cliente por nombre o cédula..."
         class="input-busqueda"
       />
+      <button class="btn-nuevo-dialog" @click="agregarNuevoCliente">
+        <i class="pi pi-plus"></i> Agregar Nuevo Cliente
+      </button>
     </div>
     <table class="dialog-table">
       <thead>
@@ -503,11 +465,6 @@ function cancelar() {
         </tr>
       </tbody>
     </table>
-    <div class="dialog-footer">
-      <button class="btn-nuevo-dialog" @click="agregarNuevoCliente">
-        <i class="pi pi-plus"></i> Agregar Nuevo Cliente
-      </button>
-    </div>
   </Dialog>
 
   <Dialog
@@ -535,6 +492,7 @@ function cancelar() {
         <img :src="producto.imagen || '/img/product-placeholder.jpg'" class="product-img" />
         <div class="product-info">
           <h4>{{ producto.nombre }}</h4>
+          <span class="product-code"> Código: {{ producto.codigo }} </span>
           <span class="product-price">Bs. {{ producto.precioUnitario }}</span>
           <span class="product-stock">Stock: {{ producto.stock }}</span>
         </div>
@@ -593,6 +551,12 @@ function cancelar() {
   font-weight: 600;
 }
 
+.product-code {
+  display: block;
+  font-size: 12px;
+  color: #666;
+}
+
 .empleado-info i {
   background: #ec4899;
   color: white;
@@ -624,6 +588,9 @@ function cancelar() {
 }
 
 .buscador-cliente {
+  display: flex;
+  gap: 10px;
+  align-items: center;
   margin-bottom: 15px;
 }
 
@@ -694,46 +661,10 @@ function cancelar() {
   padding: 50px 0 80px;
 }
 
-.venta-list-container {
-  background: white;
-  border-radius: 16px;
-  padding: 20px;
-  margin-top: 30px;
-  box-shadow: 0 4px 20px rgba(236, 72, 153, 0.1);
-}
-
-.list-title {
-  font-size: 20px;
-  font-weight: 700;
-  color: #1f1f1f;
-  margin-bottom: 15px;
-}
-
-.venta-list-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
 .venta-list-table th,
 .venta-list-table td {
   padding: 12px;
   border-bottom: 1px solid #f0f0f0;
-}
-
-.venta-id {
-  font-weight: 700;
-  color: #666;
-}
-
-.venta-total {
-  font-weight: 700;
-  color: #ec4899;
-}
-
-.empty-message {
-  text-align: center;
-  color: #999;
-  padding: 30px;
 }
 
 .nueva-venta-section {
@@ -1070,6 +1001,7 @@ function cancelar() {
   border-radius: 25px;
   outline: none;
   font-size: 14px;
+  flex: 1;
 }
 
 .input-busqueda:focus {
@@ -1126,21 +1058,6 @@ function cancelar() {
   background: #db2777;
 }
 
-.btn-detalle {
-  background: #3b82f6;
-  color: white;
-  border: none;
-  padding: 8px 14px;
-  border-radius: 20px;
-  cursor: pointer;
-  font-size: 13px;
-  font-weight: 600;
-}
-
-.btn-detalle:hover {
-  background: #2563eb;
-}
-
 .cliente-field {
   min-width: 220px;
 }
@@ -1159,6 +1076,5 @@ function cancelar() {
   border-radius: 20px;
   cursor: pointer;
   font-size: 13px;
-
 }
 </style>
