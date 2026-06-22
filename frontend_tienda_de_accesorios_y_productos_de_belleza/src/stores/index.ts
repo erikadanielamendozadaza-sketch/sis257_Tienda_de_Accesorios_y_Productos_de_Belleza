@@ -21,7 +21,7 @@ const useAuthStore = defineStore('auth', {
     return {
       empleado: empleadoLocal,
       token: getTokenFromLocalStorage(),
-      returnUrl: null || ''
+      returnUrl: null as string | null
     }
   },
   getters: {},

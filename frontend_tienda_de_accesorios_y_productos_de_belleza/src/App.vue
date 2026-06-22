@@ -1,14 +1,5 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router'
-import '@/assets/js/jquery-3.3.1.min.js'
-import '@/assets/js/bootstrap.min.js'
-import '@/assets/js/jquery.nicescroll.min.js'
-import '@/assets/js/jquery.magnific-popup.min.js'
-import '@/assets/js/jquery.countdown.min.js'
-import '@/assets/js/jquery.slicknav.js'
-import '@/assets/js/mixitup.min.js'
-import '@/assets/js/owl.carousel.min.js'
-import '@/assets/js/main.js'
 
 import MainHeader from '@/components/MainHeader.vue'
 import MainFooter from '@/components/MainFooter.vue'

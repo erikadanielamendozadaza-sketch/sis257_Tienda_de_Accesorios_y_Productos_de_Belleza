@@ -1,12 +1,29 @@
 <script setup lang="ts">
 import type { Venta } from '@/models/venta'
 import http from '@/plugins/axios'
-import { onMounted, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
 
 const ventas = ref<Venta[]>([])
+const busqueda = ref('')
+
+const ventasFiltradas = computed(() => {
+  if (!busqueda.value.trim()) {
+    return ventas.value
+  }
+
+  const texto = busqueda.value.toLowerCase()
+
+  return ventas.value.filter((venta) => {
+    const fecha = new Date(venta.fecha).toLocaleDateString('es-VE').toLowerCase()
+
+    const cliente = (venta.cliente?.razonSocial || '').toLowerCase()
+
+    return fecha.includes(texto) || cliente.includes(texto)
+  })
+})
 
 async function loadData() {
   ventas.value = await http.get('ventas')
@@ -37,6 +54,12 @@ onMounted(() => {
     </div>
   </section>
 
+    <input
+      v-model="busqueda"
+      type="text"
+      placeholder="Buscar por fecha o cliente..."
+      class="input-busqueda"
+    />
     <table class="venta-list-table">
       <thead>
         <tr>
@@ -49,7 +72,7 @@ onMounted(() => {
       </thead>
 
       <tbody>
-        <tr v-for="venta in ventas" :key="venta.id">
+        <tr v-for="venta in ventasFiltradas" :key="venta.id">
           <td class="venta-id">#{{ venta.id }}</td>
 
           <td>
@@ -74,7 +97,7 @@ onMounted(() => {
           </td>
         </tr>
 
-        <tr v-if="ventas.length === 0">
+        <tr v-if="ventasFiltradas.length === 0">
           <td colspan="5" class="empty-message">
             No hay ventas
           </td>
@@ -84,6 +107,19 @@ onMounted(() => {
   </div>
 </template>
 <style scoped>
+.input-busqueda {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid #fbcfe8;
+  border-radius: 25px;
+  outline: none;
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+.input-busqueda:focus {
+  border-color: #ec4899;
+}
 .venta-list-container {
   background: white;
   border-radius: 16px;
