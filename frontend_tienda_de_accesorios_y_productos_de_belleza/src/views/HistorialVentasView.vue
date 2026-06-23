@@ -3,6 +3,9 @@ import type { Venta } from '@/models/venta'
 import http from '@/plugins/axios'
 import { computed, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
+import DataTable from 'primevue/datatable'
+import Column from 'primevue/column'
+import Button from 'primevue/button'
 
 const router = useRouter()
 
@@ -60,50 +63,53 @@ onMounted(() => {
       placeholder="Buscar por fecha o cliente..."
       class="input-busqueda"
     />
-    <table class="venta-list-table">
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>Fecha</th>
-          <th>Cliente</th>
-          <th>Total</th>
-          <th>Detalle de la Venta</th>
-        </tr>
-      </thead>
+<DataTable
+  :value="ventasFiltradas"
+  paginator
+  :rows="10"
+  :rowsPerPageOptions="[5, 10, 25]"
+  paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
+  currentPageReportTemplate="{first} a {last} de {totalRecords}"
+  responsiveLayout="scroll"
+  stripedRows
+  class="custom-table"
+>
+  <Column field="id" header="#" sortable>
+    <template #body="{ data }">
+      #{{ data.id }}
+    </template>
+  </Column>
 
-      <tbody>
-        <tr v-for="venta in ventasFiltradas" :key="venta.id">
-          <td class="venta-id">#{{ venta.id }}</td>
+  <Column field="fecha" header="Fecha" sortable>
+    <template #body="{ data }">
+      {{ new Date(data.fecha).toLocaleDateString('es-VE') }}
+    </template>
+  </Column>
 
-          <td>
-            {{ new Date(venta.fecha).toLocaleDateString('es-VE') }}
-          </td>
+  <Column field="cliente.razonSocial" header="Cliente" sortable>
+    <template #body="{ data }">
+      {{ data.cliente?.razonSocial || 'Cliente' }}
+    </template>
+  </Column>
 
-          <td>
-            {{ venta.cliente?.razonSocial || 'Cliente' }}
-          </td>
+  <Column field="total" header="Total" sortable>
+    <template #body="{ data }">
+      Bs. {{ Number(data.total).toFixed(2) }}
+    </template>
+  </Column>
 
-          <td class="venta-total">
-            Bs. {{ Number(venta.total).toFixed(2) }}
-          </td>
-
-          <td>
-            <button
-              class="btn-detalle"
-              @click="router.push(`/detalle-venta/${venta.id}`)"
-            >
-              Ver detalle
-            </button>
-          </td>
-        </tr>
-
-        <tr v-if="ventasFiltradas.length === 0">
-          <td colspan="5" class="empty-message">
-            No hay ventas
-          </td>
-        </tr>
-      </tbody>
-    </table>
+  <Column header="Detalle">
+    <template #body="{ data }">
+      <Button
+        label="Ver detalle"
+        icon="pi pi-eye"
+        severity="info"
+        size="small"
+        @click="router.push(`/detalle-venta/${data.id}`)"
+      />
+    </template>
+  </Column>
+</DataTable>
   </div>
 </template>
 <style scoped>
@@ -202,4 +208,5 @@ onMounted(() => {
   text-transform: uppercase;
   letter-spacing: 1px;
 }
+
 </style>
