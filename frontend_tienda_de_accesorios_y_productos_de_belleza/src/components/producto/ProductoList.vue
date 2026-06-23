@@ -76,7 +76,6 @@ defineExpose({ obtenerLista })
       </InputGroup>
     </div>
 
-    <!-- TABLA CREMA -->
     <DataTable
       :value="productosFiltrados"
       paginator

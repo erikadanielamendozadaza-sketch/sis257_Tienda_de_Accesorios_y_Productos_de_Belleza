@@ -82,7 +82,7 @@ defineExpose({
     <DataTable
       :value="proveedoresFiltrados"
       paginator
-      :rows="5"
+      :rows="10"
       :rowsPerPageOptions="[5, 10, 25]"
       paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
       currentPageReportTemplate="{first} a {last} de {totalRecords}"

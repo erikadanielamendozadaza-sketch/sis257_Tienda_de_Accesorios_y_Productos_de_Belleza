@@ -16,6 +16,7 @@ const descuentoPorcentaje = ref(0)
 const tieneDescuento = ref(false)
 
 const showVentaExitosa = ref(false)
+const cargandoVenta = ref(false)
 const ventaResumen = ref({
   id: 0,
   cliente: '',
@@ -168,6 +169,7 @@ function selectCliente(cliente: Cliente) {
 }
 
 function agregarNuevoCliente() {
+  showClienteDialog.value = false
   showNuevoClienteDialog.value = true
 }
 
@@ -188,7 +190,6 @@ async function guardarNuevoCliente() {
       razonSocial: '',
       cedulaIdentidad: '',
     }
-
   } catch (error) {
     console.error(error)
     alert('Error al registrar cliente')
@@ -267,6 +268,8 @@ async function guardarVenta() {
     return
   }
 
+  cargandoVenta.value = true
+
   try {
     const emp = getEmpleadoInfo()
     const descuento = tieneDescuento.value ? descuentoPorcentaje.value : 0
@@ -317,6 +320,8 @@ async function guardarVenta() {
   } catch (error: any) {
     console.error(error)
     alert(error?.response?.data?.message || 'Error')
+  } finally {
+    cargandoVenta.value = false
   }
 }
 
@@ -447,8 +452,13 @@ function cancelar() {
 
         <div class="venta-actions">
           <button class="btn-cancel" @click="cancelar">Cancelar</button>
-          <button class="btn-save" @click="guardarVenta" :disabled="detalles.length === 0">
-            <i class="pi pi-save"></i> Guardar Venta
+          <button
+            class="btn-save"
+            @click="guardarVenta"
+            :disabled="detalles.length === 0 || cargandoVenta"
+          >
+            <i class="pi pi-save"></i>
+            {{ cargandoVenta ? 'Procesando...' : 'Guardar Venta' }}
           </button>
         </div>
       </div>
@@ -493,32 +503,24 @@ function cancelar() {
   </Dialog>
 
   <Dialog
-  v-model:visible="showNuevoClienteDialog"
-  header="Nuevo Cliente"
-  :modal="true"
-  :style="{ width: '30rem' }"
->
-  <div class="form-cliente">
+    v-model:visible="showNuevoClienteDialog"
+    header="Nuevo Cliente"
+    :modal="true"
+    :style="{ width: '30rem' }"
+  >
+    <div class="form-cliente">
+      <input
+        v-model="nuevoCliente.razonSocial"
+        placeholder="Nombre o Razón Social"
+        class="input-busqueda"
+      />
 
-    <input
-      v-model="nuevoCliente.razonSocial"
-      placeholder="Nombre o Razón Social"
-      class="input-busqueda"
-    />
-
-    <input
-      v-model="nuevoCliente.cedulaIdentidad"
-      placeholder="CI"
-      class="input-busqueda"
-    />
-    <div style="margin-top:15px">
-      <button class="btn-save" @click="guardarNuevoCliente">
-        Guardar Cliente
-      </button>
+      <input v-model="nuevoCliente.cedulaIdentidad" placeholder="CI" class="input-busqueda" />
+      <div style="margin-top: 15px">
+        <button class="btn-save" @click="guardarNuevoCliente">Guardar Cliente</button>
+      </div>
     </div>
-
-  </div>
-</Dialog>
+  </Dialog>
 
   <Dialog
     v-model:visible="showProductoDialog"
@@ -591,6 +593,22 @@ function cancelar() {
       </div>
 
       <button class="btn-aceptar" @click="showVentaExitosa = false">Aceptar</button>
+    </div>
+  </Dialog>
+  <Dialog
+    v-model:visible="cargandoVenta"
+    :modal="true"
+    :closable="false"
+    :draggable="false"
+    :showHeader="false"
+    :style="{ width: '20rem' }"
+  >
+    <div style="text-align: center; padding: 20px">
+      <i class="pi pi-spin pi-spinner" style="font-size: 3rem"></i>
+
+      <h3 style="margin-top: 15px">Procesando venta...</h3>
+
+      <p>Por favor espere</p>
     </div>
   </Dialog>
 </template>
