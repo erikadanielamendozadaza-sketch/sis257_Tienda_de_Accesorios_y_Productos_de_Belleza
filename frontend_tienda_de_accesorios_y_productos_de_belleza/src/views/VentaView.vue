@@ -45,6 +45,16 @@ const showProductoDialog = ref(false)
 
 const showNuevoClienteDialog = ref(false)
 
+function cancelarNuevoCliente() {
+  showNuevoClienteDialog.value = false
+  showClienteDialog.value = true
+
+  nuevoCliente.value = {
+    razonSocial: '',
+    cedulaIdentidad: '',
+  }
+}
+
 const nuevoCliente = ref({
   razonSocial: '',
   cedulaIdentidad: '',
@@ -508,17 +518,30 @@ function cancelar() {
     :modal="true"
     :style="{ width: '30rem' }"
   >
-    <div class="form-cliente">
+    <div class="form-group">
+      <label class="form-label">Razón Social</label>
+
       <input
         v-model="nuevoCliente.razonSocial"
-        placeholder="Nombre o Razón Social"
         class="input-busqueda"
+        placeholder="Ingrese la razón social"
       />
+    </div>
 
-      <input v-model="nuevoCliente.cedulaIdentidad" placeholder="CI" class="input-busqueda" />
-      <div style="margin-top: 15px">
-        <button class="btn-save" @click="guardarNuevoCliente">Guardar Cliente</button>
-      </div>
+    <div class="form-group">
+      <label class="form-label">Cédula de Identidad</label>
+
+      <input
+        v-model="nuevoCliente.cedulaIdentidad"
+        class="input-busqueda"
+        placeholder="Ingrese la cédula"
+      />
+    </div>
+
+    <div class="form-actions">
+      <button class="btn-cancel" @click="cancelarNuevoCliente">Cancelar</button>
+
+      <button class="btn-save" @click="guardarNuevoCliente">Guardar Cliente</button>
     </div>
   </Dialog>
 
@@ -614,6 +637,27 @@ function cancelar() {
 </template>
 
 <style scoped>
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-label {
+  display: block;
+  font-weight: 600;
+  color: #1f1f1f;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 25px;
+  padding-top: 20px;
+  border-top: 1px solid #fce7f3;
+}
+
 .empleado-info {
   display: flex;
   align-items: center;
@@ -1069,16 +1113,17 @@ function cancelar() {
   width: 100%;
   padding: 12px 16px;
   border: 2px solid #fbcfe8;
-  border-radius: 25px;
+  border-radius: 12px;
   outline: none;
   font-size: 14px;
-  flex: 1;
+  background: #fffafc;
+  transition: all 0.3s ease;
 }
 
 .input-busqueda:focus {
   border-color: #ec4899;
+  box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.1);
 }
-
 .venta-exitosa {
   text-align: center;
   padding: 10px;

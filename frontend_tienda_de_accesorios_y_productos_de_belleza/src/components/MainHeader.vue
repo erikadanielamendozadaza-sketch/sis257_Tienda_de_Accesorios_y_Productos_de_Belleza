@@ -60,7 +60,7 @@ function logout() {
                   <RouterLink to="/historial-ventas" class="nav-link">Detalle de Venta</RouterLink>
                 </li>
                 <li v-if="authStore.token">
-                  <a @click="logout()" class="nav-link logout-nav"> Salir </a>
+                  <a @click="logout()" class="nav-link logout-nav"> Cerrar Sesión </a>
                 </li>
 
                 <li v-if="!authStore.token">
